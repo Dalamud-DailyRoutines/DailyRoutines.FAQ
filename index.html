@@ -6,9 +6,24 @@
     <title>技术文档中心</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <header class="home-header">
+        <div class="header-content">
+            <img src="https://gh.atmoomen.top/StaticAssets/main/DailyRoutines/image/icon.png" 
+                 alt="Logo" 
+                 class="header-logo">
+            <h1 class="site-title">Daily Routines FAQ 中心</h1>
+        </div>
+    </header>
+    
+    <main class="home-container">
+        <div class="category-grid" id="category-list"></div>
+    </main>
+
+    <!-- 原有文章内容容器保持不动 -->
+    <div class="container hidden">
         <aside class="sidebar">
             <div class="logo-container">
                 <img src="https://gh.atmoomen.top/StaticAssets/main/DailyRoutines/image/icon.png" 
