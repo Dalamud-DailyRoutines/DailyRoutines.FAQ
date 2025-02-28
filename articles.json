@@ -26,7 +26,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:50:29.527Z",
+          "lastModified": "2025-02-28T13:55:31.408Z",
           "language": "zh",
           "translations": {}
         },
@@ -40,7 +40,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:50:29.527Z",
+          "lastModified": "2025-02-28T13:55:31.408Z",
           "language": "zh",
           "translations": {}
         },
@@ -54,7 +54,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:50:29.527Z",
+          "lastModified": "2025-02-28T13:55:31.408Z",
           "language": "zh",
           "translations": {}
         },
@@ -68,7 +68,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:50:29.527Z",
+          "lastModified": "2025-02-28T13:55:31.407Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -81,7 +81,7 @@
                 "更新",
                 "启动"
               ],
-              "lastModified": "2025-02-28T12:50:29.527Z",
+              "lastModified": "2025-02-28T13:55:31.407Z",
               "language": "en",
               "translations": {}
             }
@@ -95,24 +95,27 @@
         {
           "title": "Daily Routines 1.4.2.0 版本更新",
           "date": "2025-02-28",
-          "slug": "test",
+          "slug": "v1.4.2.0",
           "description": "",
           "tags": [
-            "标签1",
-            "标签2"
+            "更新",
+            "更新笔记",
+            "1.4.2.0"
           ],
-          "lastModified": "2025-02-28T12:50:29.527Z",
+          "lastModified": "2025-02-28T13:55:31.408Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "v1.4.2.0 Update Note",
               "date": "2025-02-28",
-              "slug": "test",
+              "slug": "v1.4.2.0",
               "description": "",
               "tags": [
-                "Update Note"
+                "Update",
+                "Update Note",
+                "1.4.2.0"
               ],
-              "lastModified": "2025-02-28T12:50:29.527Z",
+              "lastModified": "2025-02-28T13:55:31.408Z",
               "language": "en",
               "translations": {}
             }
@@ -129,7 +132,7 @@
           "slug": "友情插件",
           "description": "",
           "tags": [],
-          "lastModified": "2025-02-28T12:50:29.528Z",
+          "lastModified": "2025-02-28T13:55:31.408Z",
           "language": "zh",
           "translations": {}
         }
