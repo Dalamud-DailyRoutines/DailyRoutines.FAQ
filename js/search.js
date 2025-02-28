@@ -49,7 +49,8 @@ class SearchEngine {
             const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?v=${CONFIG.cacheVersion}`);
             if (!response.ok) throw new Error('无法加载文章索引');
             
-            const categories = await response.json();
+            const data = await response.json();
+            const categories = data.categories;
             this.documents.clear();
             
             for (const category of categories) {
