@@ -27,7 +27,22 @@ class FAQApp {
         }
         
         this.categories = [];
-        this.currentLanguage = localStorage.getItem('selectedLanguage') || window.LANGUAGE_CONFIG.default;
+        
+        // 获取本地存储的语言设置或浏览器语言
+        const savedLanguage = localStorage.getItem('selectedLanguage');
+        if (savedLanguage) {
+            this.currentLanguage = savedLanguage;
+        } else {
+            // 获取浏览器语言
+            const browserLang = navigator.language.toLowerCase().split('-')[0];
+            // 检查浏览器语言是否在支持的语言列表中
+            this.currentLanguage = window.LANGUAGE_CONFIG.supported.includes(browserLang)
+                ? browserLang
+                : window.LANGUAGE_CONFIG.default;
+            // 保存初始语言设置
+            localStorage.setItem('selectedLanguage', this.currentLanguage);
+        }
+
         this.searchEngine = new SearchEngine();
         this.currentArticle = null;
         this.lastIndexCheck = 0;
