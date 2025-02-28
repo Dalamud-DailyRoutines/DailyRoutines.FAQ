@@ -232,7 +232,7 @@ class FAQApp {
             );
 
             return `
-                <div class="category-card">
+                <div class="category-card" data-category="${category.name}">
                     <div class="category-card-header">
                         <div class="category-icon">${category.name[0]}</div>
                         <h2 class="category-title">${category.name}</h2>
@@ -279,6 +279,17 @@ class FAQApp {
     }
 
     setupEventListeners() {
+        // 主页分类卡片点击事件
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // 如果点击的是文章项，不触发分类跳转
+                if (!e.target.closest('.recent-article-item')) {
+                    const categoryName = card.dataset.category;
+                    this.showCategoryPage(categoryName);
+                }
+            });
+        });
+
         // 主页文章点击事件
         document.querySelectorAll('.recent-article-item').forEach(item => {
             item.addEventListener('click', () => this.loadArticle(
@@ -684,6 +695,51 @@ class FAQApp {
         document.title = this.t('siteTitle');
         document.querySelector('.site-title').textContent = this.t('siteTitle');
         document.querySelector('.sidebar-title').textContent = this.t('siteTitle');
+    }
+
+    async showCategoryPage(categoryName) {
+        document.querySelector('.container').classList.remove('hidden');
+        document.querySelector('.home-container').classList.add('hidden');
+        const articleContent = document.getElementById('article-content');
+        const articleList = document.getElementById('article-list');
+        
+        articleContent.classList.add('hidden');
+        articleList.classList.remove('hidden');
+        
+        // 查找对应的分类
+        const category = this.categories.find(cat => cat.name === categoryName);
+        if (!category) return;
+        
+        // 渲染分类页面
+        articleList.innerHTML = `
+            <h1 class="category-page-title">${categoryName}</h1>
+            <div class="article-list">
+                ${await Promise.all(category.articles.map(async article => {
+                    const title = await this.getArticleTitle(article, categoryName);
+                    return `
+                        <div class="article-item" data-slug="${article.slug}" data-category="${categoryName}">
+                            <h3 class="article-title">${title}</h3>
+                            ${article.date ? `<div class="article-date">${article.date}</div>` : ''}
+                            ${article.tags && article.tags.length ? `
+                                <div class="article-tags">
+                                    ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                })).then(articles => articles.join(''))}
+            </div>
+        `;
+        
+        // 添加文章点击事件
+        articleList.querySelectorAll('.article-item').forEach(item => {
+            item.addEventListener('click', () => {
+                this.loadArticle(item.dataset.slug, item.dataset.category);
+            });
+        });
+        
+        // 更新URL
+        window.location.hash = `#${categoryName}`;
     }
 }
 
