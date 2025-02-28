@@ -3,7 +3,7 @@ name: Generate Articles Index
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'articles/**'  # 当articles目录有变化时触发
 
