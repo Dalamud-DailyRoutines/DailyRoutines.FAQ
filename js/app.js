@@ -528,32 +528,4 @@ class FAQApp {
 }
 
 // 初始化应用
-new FAQApp();
-
-function Header() {
-    return (
-        <header className="header">
-            <div className="header-content">
-                <h1>DailyRoutines</h1>
-                <div className="social-links">
-                    <a 
-                        href="https://github.com/Dalamud-DailyRoutines" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="social-button"
-                    >
-                        <i className="fab fa-github"></i> Github
-                    </a>
-                    <a 
-                        href="https://discord.gg/dailyroutines" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="social-button"
-                    >
-                        <i className="fab fa-discord"></i> Discord
-                    </a>
-                </div>
-            </div>
-        </header>
-    );
-} 
+new FAQApp(); 
