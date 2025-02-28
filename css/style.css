@@ -19,7 +19,7 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 320px 1fr;
     min-height: 100vh;
     view-transition-name: container;
     gap: 2rem;
@@ -361,6 +361,7 @@ body {
 
 .content {
     padding: 3rem 4rem;
+    min-width: 600px;
     max-width: 800px;
     margin: 2rem auto;
     background: var(--surface-color);
