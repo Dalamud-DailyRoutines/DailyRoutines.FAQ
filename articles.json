@@ -4,7 +4,7 @@
     "articles": [
       {
         "title": "功能 / 模块使用问题",
-        "date": "2024-02-28",
+        "date": "2025-02-28",
         "slug": "Module-Use",
         "description": "",
         "tags": [
@@ -19,19 +19,8 @@
     "name": "认证",
     "articles": [
       {
-        "title": "安装 / 更新 / 启动相关",
-        "date": "2025-02-28",
-        "slug": "Install-Update-Launch",
-        "description": "",
-        "tags": [
-          "安装",
-          "更新",
-          "启动"
-        ]
-      },
-      {
         "title": "Daily Routines 1.4.2.0 版本更新",
-        "date": "2024-02-28",
+        "date": "2025-02-28",
         "slug": "测试",
         "description": "文章描述（可选）",
         "tags": [
@@ -41,17 +30,28 @@
       },
       {
         "title": "注册指南",
-        "date": "2024-02-28",
+        "date": "2025-02-28",
         "slug": "register",
         "description": "",
         "tags": []
       },
       {
         "title": "登录指南",
-        "date": "2024-02-28",
+        "date": "2025-02-28",
         "slug": "login",
         "description": "",
         "tags": []
+      },
+      {
+        "title": "安装 / 更新 / 启动相关",
+        "date": "2025-02-28",
+        "slug": "Install-Update-Launch",
+        "description": "",
+        "tags": [
+          "安装",
+          "更新",
+          "启动"
+        ]
       }
     ]
   }
