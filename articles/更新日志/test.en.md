@@ -1,0 +1,109 @@
+# Daily Routines has been updated to Version 1.4.2.0.
+
+## Modifications on Daily Routines
+
+- The logic of reloading modules after the authentication is passed was optimized.
+- The performance and appearance of instant movement was optimized.
+- An issue of unexpected accelerated gathering has been fixed.
+- An issue that the floating window resources of module configurations were not cleaned up in time after uninstallation has been fixed.
+- The style of the button `Show Config Overlay` in the toolbar at the bottom right corner of module configuration interfaces was adjusted.
+- If the module is not initialized, the button `Show Config Overlay` will be disabled now.
+- New button `Copy module internal name` in the toolbar at the bottom right corner of module configuration interfaces, to copy the internal name of the module.
+- Dismounting logic shared within Daily Routines will no longer stop moving forward now.
+
+
+
+## New modules
+
+- `Charge skill movement disabled` (would be called as `Disable Movement Of Gap Closers` after next update) [Action]: Disable movement of the character when executing a gap closer action.
+- `Open the Duty Finder compatible with Wondrous Tails` (would be called as `Jump To Duties In Wondrous Tails` after next update) [UI Optimization]: Allow to jump to the corresponding duties in the interface of Wondrous Tails. [@Due]
+- `Highlighting the best solution for the Faux Hollows` (would be called as `Faux Hollows Solver` after next update) [UI Optimization]: When you open the Faux Hollows interface, the current optimal solution will be highlighted automatically according to your settings. (Highlight color: Blue → Twin Swords / Pink → Treasure Box, Gift Box / Gold → Faux) [@Veever]
+
+
+
+## Module modifications
+
+### Auto Hunt Mobs Finder
+
+- An issue that the delay didn't take effect has been fixed. [@雨露霜雪]
+- The minimum delay which will not cause disconnections on CN has been measured and applied as the default value. If a lower delay is set, a warning will pop up. [@雨露霜雪]
+
+
+
+### Auto Use Gysahl Greens
+
+- New option `Use the Gysahl Greens even for non-battle jobs`, to check and use Gysahl Greens when necessary even if the current job is DoH/DoL. Disabled by default.
+- Now the module will no longer work in `Wolves' Den Pier`.
+
+
+
+### Astrologian Helper
+
+- Now the module will be automatically disabled in PVP areas.
+- The logic of redirection was optimized. It will no longer force to redirect after manually selecting.
+
+
+
+### Display Actual Item Icon In Shops
+
+- An issue of icon misalignment problem if some items are still hidden in the current shop has been fixed.
+
+
+
+### Auto Check Self Food Status
+
+- The appearance of prompts was adjusted.
+- The text of the option `Send Chat Message` was corrected.
+- The detection logic was optimized.
+- Now the region restrictions will take effect on all trigger conditions.
+
+
+
+### Instant Dismount
+
+- The logic was optimized and streamlined the module logic. Now the module adopts the shared logic of dismounting.
+- The prompt when there is no landable ground below was deleted.
+
+
+
+### Auto Dismount
+
+- The logic  and streamlined the module logic. Now the module adopts the shared logic of dismounting.
+- The judgment was optimized. Now it will try to dismount while using `items` and `fashion accessories`.
+
+
+
+### Game Interaction Optimization
+
+- The logic was optimized and streamlined the module logic. Now the module adopts the shared logic of dismounting.
+
+
+
+### Fast Object Interact
+
+- An issue that some resources may not be cleaned up has been fixed.
+
+
+
+### Optimize Enmity List
+
+- Now the percentage of the target HP will be precise to 1 decimal place.
+- New setting option `Chant information display blacklist`. Users could add the full name of the target which users are not interested in their chant information. When a name is fully matched, the module will consistently display its HP and enmity only.
+
+
+
+### Auto Split Items
+
+- An issue that some resources may not be cleaned up has been fixed.
+
+
+
+### Auto Commendation (would be called as `Auto Commend Party Members` after next update)
+
+- An issue that some configurations may not be saved has been fixed.
+
+
+
+### Auto Redirect Ground-Targeted Actions
+
+- An issue that the parameters of the command `<center>` didn't work has been fixed.
