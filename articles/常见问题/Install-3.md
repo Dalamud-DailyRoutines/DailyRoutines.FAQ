@@ -1,5 +1,5 @@
 ---
-title: 3. Daily Routines 无法更新/无法下载/连接库失败怎么办
+title: Daily Routines 无法更新/无法下载/连接库失败怎么办
 tags: [安装, 更新, 启动]
 ---
 
