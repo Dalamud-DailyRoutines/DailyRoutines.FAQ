@@ -3,10 +3,11 @@
     --secondary-color: #4f46e5;
     --background-color: #f8fafc;
     --surface-color: #ffffff;
-    --dark-primary: #8ab4f8;
-    --dark-secondary: #f48fb1;
-    --dark-background: #202124;
+    --dark-primary: #7289da;
+    --dark-secondary: #5865f2;
+    --dark-background: #1a1b1e;
     --dark-surface: #2d2e30;
+    --dark-text: #e8eaed;
 }
 
 body {
@@ -250,6 +251,43 @@ body {
 
     .nav-title {
         color: #9aa0a6;
+    }
+
+    .home-header {
+        background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+    }
+
+    .nav-article-item {
+        color: #e8eaed;
+    }
+
+    #article-content h1,
+    #article-content h2,
+    #article-content h3,
+    #article-content h4,
+    #article-content h5,
+    #article-content h6 {
+        color: #e8eaed;
+    }
+
+    .site-title {
+        color: #e8eaed;
+    }
+
+    .category-title {
+        color: var(--dark-primary);
+    }
+
+    .nav-category-title {
+        color: #e8eaed;
+    }
+
+    .article-header h1 {
+        color: #e8eaed;
+    }
+
+    .search-result-title {
+        color: #e8eaed;
     }
 }
 
