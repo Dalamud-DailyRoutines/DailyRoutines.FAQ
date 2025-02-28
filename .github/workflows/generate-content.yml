@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'articles/**'  # 当articles目录有变化时触发
+  workflow_dispatch: # 添加手动触发
 
 jobs:
   generate:
