@@ -3,16 +3,52 @@
     "name": "常见问题",
     "articles": [
       {
-        "title": "安装 / 更新 / 启动相关",
+        "title": "Daily Routines 更新后无法打开界面并提示“命令不存在”",
         "date": "2025-02-28",
-        "slug": "Install-Update-Launch",
+        "slug": "Install-4",
         "description": "",
         "tags": [
           "安装",
           "更新",
           "启动"
         ],
-        "lastModified": "2025-02-28T11:48:00.401Z"
+        "lastModified": "2025-02-28T11:54:12.331Z"
+      },
+      {
+        "title": "Daily Routines 无法更新/无法下载/连接库失败怎么办",
+        "date": "2025-02-28",
+        "slug": "Install-3",
+        "description": "",
+        "tags": [
+          "安装",
+          "更新",
+          "启动"
+        ],
+        "lastModified": "2025-02-28T11:54:12.331Z"
+      },
+      {
+        "title": "为什么插件安装器内没有显示主界面或配置界面的按钮?",
+        "date": "2025-02-28",
+        "slug": "Install-2",
+        "description": "",
+        "tags": [
+          "安装",
+          "更新",
+          "启动"
+        ],
+        "lastModified": "2025-02-28T11:54:12.331Z"
+      },
+      {
+        "title": "在我使用`卫月（Dalamud）`下载`Daily Routines`时提示失败怎么回事",
+        "date": "2025-02-28",
+        "slug": "Install-1",
+        "description": "",
+        "tags": [
+          "安装",
+          "更新",
+          "启动"
+        ],
+        "lastModified": "2025-02-28T11:54:12.331Z"
       }
     ]
   },
@@ -28,7 +64,7 @@
           "标签1",
           "标签2"
         ],
-        "lastModified": "2025-02-28T11:48:00.401Z"
+        "lastModified": "2025-02-28T11:54:12.331Z"
       }
     ]
   },
@@ -41,7 +77,7 @@
         "slug": "友情插件",
         "description": "",
         "tags": [],
-        "lastModified": "2025-02-28T11:48:00.402Z"
+        "lastModified": "2025-02-28T11:54:12.331Z"
       }
     ]
   }
