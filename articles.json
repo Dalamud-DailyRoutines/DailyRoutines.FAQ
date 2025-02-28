@@ -1,0 +1,28 @@
+[
+    {
+        "name": "入门指南",
+        "articles": [
+            {
+                "title": "安装指南",
+                "slug": "installation"
+            },
+            {
+                "title": "配置说明",
+                "slug": "configuration"
+            }
+        ]
+    },
+    {
+        "name": "高级使用",
+        "articles": [
+            {
+                "title": "插件系统",
+                "slug": "plugins"
+            },
+            {
+                "title": "API 文档",
+                "slug": "api"
+            }
+        ]
+    }
+] 

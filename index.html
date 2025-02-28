@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术文档中心</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="https://gh.atmoomen.top/StaticAssets/main/DailyRoutines/image/icon.png" 
+                     alt="Logo" 
+                     class="site-logo">
+            </div>
+            <h1 class="site-title">技术文档中心</h1>
+            <div class="search-box">
+                <input type="text" placeholder="搜索文档..." id="search-input">
+            </div>
+            <nav id="category-list"></nav>
+        </aside>
+        
+        <main class="content">
+            <div id="article-list"></div>
+            <article id="article-content" class="hidden"></article>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flexsearch/0.7.31/flexsearch.bundle.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 

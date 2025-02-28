@@ -1,0 +1,244 @@
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #4f46e5;
+    --background-color: #f8fafc;
+    --surface-color: #ffffff;
+    --dark-primary: #8ab4f8;
+    --dark-secondary: #f48fb1;
+    --dark-background: #202124;
+    --dark-surface: #2d2e30;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    background-color: var(--background-color);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+    view-transition-name: container;
+}
+
+.sidebar {
+    background: white;
+    padding: 2rem;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-radius: 0 1rem 1rem 0;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.site-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.site-logo:hover {
+    transform: rotate(15deg) scale(1.1);
+}
+
+.site-title {
+    color: var(--primary-color);
+    margin: 1rem 0 2rem 0;
+    font-size: 1.8rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.site-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--secondary-color);
+    border-radius: 2px;
+}
+
+.search-box {
+    margin-bottom: 1.5rem;
+}
+
+#search-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.category {
+    margin: 1rem 0;
+}
+
+.category-title {
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.category-title:hover {
+    background: #f0f0f0;
+}
+
+.content {
+    padding: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.article-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-item:hover {
+    transform: translateX(5px);
+}
+
+#article-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        position: static;
+        height: auto;
+    }
+    
+    .content {
+        padding: 1.5rem;
+    }
+}
+
+/* 新增暗黑模式样式 */
+[data-theme="dark"] {
+    --primary-color: var(--dark-primary);
+    --secondary-color: var(--dark-secondary);
+    --background-color: var(--dark-background);
+    
+    .sidebar, 
+    .article-item,
+    #article-content {
+        background-color: var(--dark-surface);
+        color: #e8eaed;
+    }
+    
+    #search-input {
+        background-color: #303134;
+        border-color: #5f6368;
+        color: #e8eaed;
+    }
+    
+    .site-title::after {
+        background: var(--dark-secondary);
+    }
+    
+    .site-logo {
+        filter: brightness(0.9);
+        box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* 新增主题切换按钮 */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+/* 新增渐变过渡效果 */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+/* Markdown内容样式优化 */
+#article-content {
+    h1, h2, h3 {
+        color: var(--primary-color);
+        margin-top: 2em;
+        position: relative;
+        padding-left: 1.5rem;
+    }
+
+    h1::before,
+    h2::before,
+    h3::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.6em;
+        width: 6px;
+        height: 1em;
+        background: var(--secondary-color);
+        border-radius: 3px;
+    }
+
+    code {
+        background: var(--background-color);
+        padding: 0.2em 0.4em;
+        border-radius: 0.3em;
+        font-family: 'Fira Code', monospace;
+    }
+
+    pre {
+        background: var(--surface-color);
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    blockquote {
+        border-left: 4px solid var(--secondary-color);
+        margin: 1.5rem 0;
+        padding: 1rem 1.5rem;
+        background: var(--background-color);
+        border-radius: 0.5rem;
+        font-style: italic;
+    }
+} 
