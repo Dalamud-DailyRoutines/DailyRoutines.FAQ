@@ -1,6 +1,6 @@
 [
   {
-    "name": "认证",
+    "name": "更新日志",
     "articles": [
       {
         "title": "Daily Routines 1.4.2.0 版本更新",
@@ -11,15 +11,20 @@
           "标签1",
           "标签2"
         ],
-        "lastModified": "2025-02-28T06:07:40.470Z"
-      },
+        "lastModified": "2025-02-28T11:15:55.148Z"
+      }
+    ]
+  },
+  {
+    "name": "认证",
+    "articles": [
       {
         "title": "注册指南",
         "date": "2025-02-28",
         "slug": "register",
         "description": "",
         "tags": [],
-        "lastModified": "2025-02-28T06:07:40.470Z"
+        "lastModified": "2025-02-28T11:15:55.148Z"
       },
       {
         "title": "登录指南",
@@ -27,7 +32,7 @@
         "slug": "login",
         "description": "",
         "tags": [],
-        "lastModified": "2025-02-28T06:07:40.470Z"
+        "lastModified": "2025-02-28T11:15:55.148Z"
       },
       {
         "title": "安装 / 更新 / 启动相关",
@@ -39,7 +44,7 @@
           "更新",
           "启动"
         ],
-        "lastModified": "2025-02-28T06:07:40.470Z"
+        "lastModified": "2025-02-28T11:15:55.148Z"
       }
     ]
   }
