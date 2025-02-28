@@ -2,7 +2,8 @@
 const CONFIG = {
     articlesPath: 'articles',
     indexFile: 'articles.json',
-    basePath: ''
+    basePath: '',
+    cacheVersion: Date.now() // 添加缓存版本
 };
 
 // 初始化基础路径
@@ -34,7 +35,14 @@ class FAQApp {
 
     async checkForUpdates() {
         try {
-            const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?t=${Date.now()}`);
+            const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?v=${CONFIG.cacheVersion}`, {
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
             if (!response.ok) return;
             
             const newIndex = await response.json();
@@ -45,6 +53,14 @@ class FAQApp {
                 console.log('检测到文章更新，正在刷新...');
                 this.categories = newIndex;
                 this.renderCategories();
+                // 强制重新加载当前文章（如果有）
+                const hash = window.location.hash;
+                if (hash) {
+                    const [category, slug] = hash.slice(1).split('/');
+                    if (category && slug) {
+                        this.loadArticle(slug, category);
+                    }
+                }
             }
         } catch (error) {
             console.error('检查更新失败:', error);
@@ -73,7 +89,14 @@ class FAQApp {
     }
 
     async loadIndex() {
-        const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?t=${Date.now()}`);
+        const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?v=${CONFIG.cacheVersion}`, {
+            method: 'GET',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -175,9 +198,16 @@ class FAQApp {
         `;
         
         try {
-            const path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md`;
+            const path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md?v=${CONFIG.cacheVersion}`;
             console.log('尝试加载文章:', path);
-            const response = await fetch(path);
+            const response = await fetch(path, {
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
             if (!response.ok) throw new Error(`文章加载失败 (${response.status})`);
             
             const markdown = await response.text();
