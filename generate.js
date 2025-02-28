@@ -110,7 +110,7 @@ function generateIndex() {
     // 写入 JSON 文件
     try {
         fs.writeFileSync(outputFile, JSON.stringify({
-            languages: LANGUAGE_CONFIG,
+            config: LANGUAGE_CONFIG,
             categories: categories
         }, null, 2));
         console.log('✅ 索引生成成功！');

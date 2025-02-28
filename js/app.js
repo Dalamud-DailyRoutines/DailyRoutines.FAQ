@@ -17,7 +17,6 @@ function initBasePath() {
 class FAQApp {
     constructor() {
         this.categories = [];
-        this.languages = null;
         this.currentLanguage = localStorage.getItem('selectedLanguage') || LANGUAGE_CONFIG.default;
         this.searchEngine = new SearchEngine();
         this.currentArticle = null;
@@ -52,12 +51,11 @@ class FAQApp {
             
             const newIndex = await response.json();
             const currentHash = JSON.stringify(this.categories);
-            const newHash = JSON.stringify(newIndex);
+            const newHash = JSON.stringify(newIndex.categories);
             
             if (currentHash !== newHash) {
                 console.log('检测到文章更新，正在刷新...');
                 this.categories = newIndex.categories;
-                this.languages = newIndex.languages;
                 this.renderCategories();
                 // 强制重新加载当前文章（如果有）
                 const hash = window.location.hash;
@@ -110,12 +108,11 @@ class FAQApp {
         }
         const data = await response.json();
         this.categories = data.categories;
-        this.languages = data.languages;
         
         // 设置语言选择器
         const languageSelector = document.getElementById('language-selector');
-        languageSelector.innerHTML = this.languages.supported.map(lang => 
-            `<option value="${lang}">${this.languages.labels[lang]}</option>`
+        languageSelector.innerHTML = LANGUAGE_CONFIG.supported.map(lang => 
+            `<option value="${lang}">${LANGUAGE_CONFIG.labels[lang]}</option>`
         ).join('');
         languageSelector.value = this.currentLanguage;
         languageSelector.addEventListener('change', (e) => {
