@@ -3,6 +3,16 @@
     "name": "认证",
     "articles": [
       {
+        "title": "Daily Routines 1.4.2.0 版本更新",
+        "date": "2024-02-28",
+        "slug": "测试",
+        "description": "文章描述（可选）",
+        "tags": [
+          "标签1",
+          "标签2"
+        ]
+      },
+      {
         "title": "注册指南",
         "date": "2024-02-28",
         "slug": "register",
