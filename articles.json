@@ -12,33 +12,12 @@
       "ja": "日本語"
     }
   },
+  "categoryWeights": {
+    "常见问题-FAQ": 100,
+    "更新日志-UpdateNote": 90,
+    "其他-Other": -1
+  },
   "categories": [
-    {
-      "name": "其他-Other",
-      "articles": [
-        {
-          "title": "友情插件",
-          "date": "2025-02-28",
-          "slug": "友情插件",
-          "description": "",
-          "tags": [],
-          "lastModified": "2025-02-28T14:52:28.380Z",
-          "language": "zh",
-          "translations": {
-            "en": {
-              "title": "Recommended Plugins",
-              "date": "2025-02-28",
-              "slug": "友情插件",
-              "description": "",
-              "tags": [],
-              "lastModified": "2025-02-28T14:52:28.380Z",
-              "language": "en",
-              "translations": {}
-            }
-          }
-        }
-      ]
-    },
     {
       "name": "常见问题-FAQ",
       "articles": [
@@ -52,7 +31,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T14:52:28.380Z",
+          "lastModified": "2025-02-28T15:18:43.173Z",
           "language": "zh",
           "translations": {}
         },
@@ -66,7 +45,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T14:52:28.380Z",
+          "lastModified": "2025-02-28T15:18:43.173Z",
           "language": "zh",
           "translations": {}
         },
@@ -80,7 +59,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T14:52:28.380Z",
+          "lastModified": "2025-02-28T15:18:43.173Z",
           "language": "zh",
           "translations": {}
         },
@@ -94,7 +73,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T14:52:28.380Z",
+          "lastModified": "2025-02-28T15:18:43.173Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -107,7 +86,7 @@
                 "更新",
                 "启动"
               ],
-              "lastModified": "2025-02-28T14:52:28.380Z",
+              "lastModified": "2025-02-28T15:18:43.173Z",
               "language": "en",
               "translations": {}
             }
@@ -119,7 +98,7 @@
       "name": "更新日志-UpdateNote",
       "articles": [
         {
-          "title": "Daily Routines 1.4.2.1 版本更新",
+          "title": "1.4.2.1 版本更新",
           "date": "2025-02-28",
           "slug": "v1.4.2.1",
           "description": "",
@@ -127,32 +106,58 @@
             "更新笔记",
             "1.4.2.1"
           ],
-          "lastModified": "2025-02-28T14:52:28.380Z",
+          "lastModified": "2025-02-28T15:18:43.173Z",
           "language": "zh",
           "translations": {}
         },
         {
-          "title": "Daily Routines 1.4.2.0 版本更新",
+          "title": "1.4.2.0 版本更新",
           "date": "2025-02-28",
-          "slug": "v1-4-2-0",
+          "slug": "v1.4.2.0",
           "description": "",
           "tags": [
             "更新笔记",
             "1.4.2.0"
           ],
-          "lastModified": "2025-02-28T14:52:28.380Z",
+          "lastModified": "2025-02-28T15:18:43.173Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "v1.4.2.0 Update Note",
               "date": "2025-02-28",
-              "slug": "v1-4-2-0",
+              "slug": "v1.4.2.0",
               "description": "",
               "tags": [
                 "Update Note",
                 "1.4.2.0"
               ],
-              "lastModified": "2025-02-28T14:52:28.380Z",
+              "lastModified": "2025-02-28T15:18:43.173Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "其他-Other",
+      "articles": [
+        {
+          "title": "友情插件",
+          "date": "2025-02-28",
+          "slug": "友情插件",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T15:18:43.173Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "Recommended Plugins",
+              "date": "2025-02-28",
+              "slug": "友情插件",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T15:18:43.173Z",
               "language": "en",
               "translations": {}
             }
