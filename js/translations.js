@@ -1,6 +1,6 @@
 const TRANSLATIONS = {
     zh: {
-        siteTitle: 'Daily Routines FAQ 中心',
+        siteTitle: 'Daily Routines 信息中心',
         search: {
             placeholder: '搜索文档...',
             noResults: '没有找到相关结果',
@@ -21,7 +21,7 @@ const TRANSLATIONS = {
         }
     },
     en: {
-        siteTitle: 'Daily Routines FAQ Center',
+        siteTitle: 'Daily Routines Info Center',
         search: {
             placeholder: 'Search documents...',
             noResults: 'No results found',
@@ -42,7 +42,7 @@ const TRANSLATIONS = {
         }
     },
     ja: {
-        siteTitle: 'Daily Routines FAQセンター',
+        siteTitle: 'Daily Routines インフォメーションセンター',
         search: {
             placeholder: 'ドキュメントを検索...',
             noResults: '結果が見つかりません',

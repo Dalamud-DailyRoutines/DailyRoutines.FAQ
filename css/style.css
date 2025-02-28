@@ -1101,4 +1101,83 @@ body {
 
 [data-theme="dark"] .header-button:hover {
     background-color: var(--dark-secondary);
+}
+
+/* 分类页面样式 */
+.category-page-title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.article-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.article-item {
+    background: var(--surface-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.article-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.article-item .article-title {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin: 0 0 1rem 0;
+}
+
+.article-item .article-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+}
+
+.article-item .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.article-item .tag {
+    background: var(--background-color);
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .article-item {
+    background: var(--dark-surface);
+}
+
+[data-theme="dark"] .article-item .tag {
+    background: rgba(255,255,255,0.1);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .category-page-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .article-item {
+        padding: 1rem;
+    }
+    
+    .article-item .article-title {
+        font-size: 1.1rem;
+    }
 } 
