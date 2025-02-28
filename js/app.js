@@ -15,8 +15,40 @@ function initBasePath() {
 class FAQApp {
     constructor() {
         this.categories = [];
+        this.lastIndexCheck = 0;
         initBasePath();
         this.init();
+        this.setupAutoRefresh();
+    }
+
+    setupAutoRefresh() {
+        // 每分钟检查一次更新
+        setInterval(() => this.checkForUpdates(), 60000);
+        // 当页面从隐藏状态变为可见时也检查更新
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                this.checkForUpdates();
+            }
+        });
+    }
+
+    async checkForUpdates() {
+        try {
+            const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?t=${Date.now()}`);
+            if (!response.ok) return;
+            
+            const newIndex = await response.json();
+            const currentHash = JSON.stringify(this.categories);
+            const newHash = JSON.stringify(newIndex);
+            
+            if (currentHash !== newHash) {
+                console.log('检测到文章更新，正在刷新...');
+                this.categories = newIndex;
+                this.renderCategories();
+            }
+        } catch (error) {
+            console.error('检查更新失败:', error);
+        }
     }
 
     async init() {
@@ -41,7 +73,7 @@ class FAQApp {
     }
 
     async loadIndex() {
-        const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}`);
+        const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?t=${Date.now()}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -173,29 +205,13 @@ class FAQApp {
                 // 构建文章头部 HTML
                 let articleHeader = `
                     <div class="article-header">
-                        <div class="version-badge">${frontmatter.title.includes('版本更新') ? frontmatter.title.match(/\d+\.\d+\.\d+\.\d+/)[0] : ''}</div>
                         <h1>${frontmatter.title}</h1>
                         ${frontmatter.date ? `
-                            <div class="article-meta">
-                                <div class="article-date">
-                                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                        <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V19a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4Zm0,15H5V8H19Z"/>
-                                    </svg>
-                                    更新日期：${frontmatter.date}
-                                </div>
-                                ${frontmatter.tags ? `
-                                    <div class="article-tags">
-                                        ${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                                    </div>
-                                ` : ''}
-                            </div>
-                        ` : ''}
-                        ${frontmatter.description ? `
-                            <div class="article-description">
+                            <div class="article-date">
                                 <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                    <path fill="currentColor" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm0-8.5a1,1,0,0,0-1,1v3a1,1,0,0,0,2,0v-3A1,1,0,0,0,12,11.5Zm0-4a1.25,1.25,0,1,0,1.25,1.25A1.25,1.25,0,0,0,12,7.5Z"/>
+                                    <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V19a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4Zm0,15H5V8H19Z"/>
                                 </svg>
-                                ${frontmatter.description}
+                                ${frontmatter.date}
                             </div>
                         ` : ''}
                     </div>
