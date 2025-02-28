@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技术文档中心</title>
+    <title>Daily Routines FAQ 中心</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet">
@@ -11,10 +11,9 @@
 <body>
     <header class="home-header">
         <div class="header-content">
-            <img src="https://gh.atmoomen.top/StaticAssets/main/DailyRoutines/image/icon.png" 
-                 alt="Logo" 
-                 class="header-logo">
-            <h1 class="site-title">Daily Routines FAQ 中心</h1>
+            <a href="/" class="header-link">
+                <h1 class="site-title">Daily Routines FAQ 中心</h1>
+            </a>
         </div>
     </header>
     
@@ -22,19 +21,36 @@
         <div class="category-grid" id="category-list"></div>
     </main>
 
-    <!-- 原有文章内容容器保持不动 -->
+    <!-- 文章内容容器 -->
     <div class="container hidden">
         <aside class="sidebar">
-            <div class="logo-container">
-                <img src="https://gh.atmoomen.top/StaticAssets/main/DailyRoutines/image/icon.png" 
-                     alt="Logo" 
-                     class="site-logo">
+            <div class="sidebar-header">
+                <a href="/" class="sidebar-brand">
+                    <img src="https://gh.atmoomen.top/StaticAssets/main/DailyRoutines/image/icon.png" 
+                         alt="Logo" 
+                         class="sidebar-logo">
+                    <span class="sidebar-title">FAQ 中心</span>
+                </a>
+                <button class="sidebar-back">
+                    <span class="back-icon">←</span>
+                    <span>返回主页</span>
+                </button>
             </div>
-            <h1 class="site-title">技术文档中心</h1>
-            <div class="search-box">
-                <input type="text" placeholder="搜索文档..." id="search-input">
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="搜索文档..." id="search-input">
+                </div>
+                <div class="search-results" id="search-results"></div>
             </div>
-            <nav id="category-list"></nav>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3 class="nav-title">文档目录</h3>
+                    <div id="category-nav"></div>
+                </div>
+            </nav>
         </aside>
         
         <main class="content">

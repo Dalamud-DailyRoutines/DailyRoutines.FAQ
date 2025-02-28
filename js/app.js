@@ -17,6 +17,7 @@ class FAQApp {
         this.checkInitialHash();
         this.setupCategoryState();
         this.setupTheme();
+        this.setupNavigation();
     }
 
     async loadIndex() {
@@ -26,6 +27,9 @@ class FAQApp {
 
     renderCategories() {
         const container = document.getElementById('category-list');
+        const categoryNav = document.getElementById('category-nav');
+        
+        // 渲染主页分类卡片
         container.innerHTML = this.categories.map(category => `
             <div class="category-card">
                 <div class="category-card-header">
@@ -43,9 +47,26 @@ class FAQApp {
                 </ul>
             </div>
         `).join('');
+
+        // 渲染侧边栏导航
+        categoryNav.innerHTML = this.categories.map(category => `
+            <div class="nav-category">
+                <h4 class="nav-category-title">${category.name}</h4>
+                <ul class="nav-article-list">
+                    ${category.articles.map(article => `
+                        <li class="nav-article-item" 
+                            data-slug="${article.slug}"
+                            data-category="${category.name}">
+                            ${article.title}
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `).join('');
     }
 
     setupEventListeners() {
+        // 主页文章点击事件
         document.querySelectorAll('.recent-article-item').forEach(item => {
             item.addEventListener('click', () => this.loadArticle(
                 item.dataset.slug,
@@ -53,15 +74,38 @@ class FAQApp {
             ));
         });
 
-        document.querySelectorAll('.category-title').forEach(title => {
-            title.addEventListener('click', () => {
-                const articlesDiv = title.nextElementSibling;
-                articlesDiv.hidden = !articlesDiv.hidden;
-                this.saveCategoryState(title.textContent, !articlesDiv.hidden);
-            });
+        // 侧边栏文章点击事件
+        document.querySelectorAll('.nav-article-item').forEach(item => {
+            item.addEventListener('click', () => this.loadArticle(
+                item.dataset.slug,
+                item.dataset.category
+            ));
+        });
+
+        // 返回主页按钮点击事件
+        document.querySelector('.sidebar-back').addEventListener('click', () => {
+            this.showHome();
+        });
+
+        // 主页标题点击事件
+        document.querySelector('.header-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showHome();
+        });
+
+        // 侧边栏品牌点击事件
+        document.querySelector('.sidebar-brand').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showHome();
         });
 
         window.addEventListener('hashchange', () => this.checkInitialHash());
+    }
+
+    showHome() {
+        document.querySelector('.container').classList.add('hidden');
+        document.querySelector('.home-container').classList.remove('hidden');
+        window.location.hash = '';
     }
 
     async loadArticle(slug, category) {
@@ -75,18 +119,29 @@ class FAQApp {
             </div>
         `;
         
-        const path = `${CONFIG.articlesPath}/${category}/${slug}.md`;
-        const response = await fetch(path);
-        const markdown = await response.text();
-        this.renderArticle(marked.parse(markdown));
-        window.location.hash = `#${category}/${slug}`;
+        try {
+            const path = `${CONFIG.articlesPath}/${category}/${slug}.md`;
+            const response = await fetch(path);
+            if (!response.ok) throw new Error('文章加载失败');
+            
+            const markdown = await response.text();
+            this.renderArticle(marked.parse(markdown));
+            window.location.hash = `#${category}/${slug}`;
 
-        const savedProgress = localStorage.getItem(`progress:${window.location.hash}`);
-        if (savedProgress) {
-            requestAnimationFrame(() => {
-                articleContent.scrollTop = savedProgress * 
-                    (articleContent.scrollHeight - articleContent.clientHeight);
-            });
+            const savedProgress = localStorage.getItem(`progress:${window.location.hash}`);
+            if (savedProgress) {
+                requestAnimationFrame(() => {
+                    articleContent.scrollTop = savedProgress * 
+                        (articleContent.scrollHeight - articleContent.clientHeight);
+                });
+            }
+        } catch (error) {
+            articleContent.innerHTML = `
+                <div class="error-message">
+                    <h2>加载失败</h2>
+                    <p>${error.message}</p>
+                </div>
+            `;
         }
     }
 
@@ -103,6 +158,7 @@ class FAQApp {
             hljs.highlightElement(block);
         });
 
+        // 保存阅读进度
         articleContent.addEventListener('scroll', () => {
             const scrollPercent = articleContent.scrollTop / 
                 (articleContent.scrollHeight - articleContent.clientHeight);
@@ -114,16 +170,23 @@ class FAQApp {
         if (window.location.hash) {
             const [category, slug] = window.location.hash.substring(1).split('/');
             this.loadArticle(slug, category);
+        } else {
+            this.showHome();
         }
     }
 
     setupCategoryState() {
         this.categoryState = JSON.parse(localStorage.getItem('categoryState') || '{}');
         
-        document.querySelectorAll('.category-title').forEach(title => {
+        document.querySelectorAll('.nav-category-title').forEach(title => {
             const category = title.textContent;
-            const articlesDiv = title.nextElementSibling;
-            articlesDiv.hidden = !this.categoryState[category];
+            const articlesList = title.nextElementSibling;
+            articlesList.hidden = !this.categoryState[category];
+            
+            title.addEventListener('click', () => {
+                articlesList.hidden = !articlesList.hidden;
+                this.saveCategoryState(category, !articlesList.hidden);
+            });
         });
     }
 
@@ -148,28 +211,23 @@ class FAQApp {
             localStorage.setItem('theme', this.theme);
         });
     }
+
+    setupNavigation() {
+        // 添加导航相关的键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            // ESC 键返回主页
+            if (e.key === 'Escape') {
+                this.showHome();
+            }
+            
+            // Ctrl/Cmd + K 聚焦搜索框
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('search-input').focus();
+            }
+        });
+    }
 }
 
 // 初始化应用
 new FAQApp(); 
-
-// 添加对应的CSS样式
-.loading {
-    text-align: center;
-    padding: 3rem;
-    color: var(--primary-color);
-}
-
-.loader {
-    width: 40px;
-    height: 40px;
-    margin: 0 auto 1rem;
-    border: 3px solid var(--background-color);
-    border-top-color: var(--primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-} 
