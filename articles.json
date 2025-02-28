@@ -31,7 +31,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T16:45:53.562Z",
+          "lastModified": "2025-02-28T16:48:08.502Z",
           "language": "zh",
           "translations": {}
         },
@@ -45,7 +45,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T16:45:53.562Z",
+          "lastModified": "2025-02-28T16:48:08.502Z",
           "language": "zh",
           "translations": {}
         },
@@ -59,7 +59,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T16:45:53.562Z",
+          "lastModified": "2025-02-28T16:48:08.502Z",
           "language": "zh",
           "translations": {}
         },
@@ -73,7 +73,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T16:45:53.562Z",
+          "lastModified": "2025-02-28T16:48:08.502Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -86,7 +86,7 @@
                 "更新",
                 "启动"
               ],
-              "lastModified": "2025-02-28T16:45:53.562Z",
+              "lastModified": "2025-02-28T16:48:08.502Z",
               "language": "en",
               "translations": {}
             }
@@ -106,11 +106,11 @@
             "更新笔记",
             "1.4.2.1"
           ],
-          "lastModified": "2025-02-28T16:45:53.562Z",
+          "lastModified": "2025-02-28T16:48:08.503Z",
           "language": "zh",
           "translations": {
             "en": {
-              "title": "1.4.2.1 Update Note",
+              "title": "v1.4.2.1 Update Note",
               "date": "2025-02-28",
               "slug": "v1.4.2.1",
               "description": "",
@@ -118,7 +118,7 @@
                 "Update Note",
                 "1.4.2.1"
               ],
-              "lastModified": "2025-02-28T16:45:53.562Z",
+              "lastModified": "2025-02-28T16:48:08.503Z",
               "language": "en",
               "translations": {}
             }
@@ -133,7 +133,7 @@
             "更新笔记",
             "1.4.2.0"
           ],
-          "lastModified": "2025-02-28T16:45:53.562Z",
+          "lastModified": "2025-02-28T16:48:08.503Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -145,7 +145,7 @@
                 "Update Note",
                 "1.4.2.0"
               ],
-              "lastModified": "2025-02-28T16:45:53.562Z",
+              "lastModified": "2025-02-28T16:48:08.502Z",
               "language": "en",
               "translations": {}
             }
@@ -162,7 +162,7 @@
           "slug": "友情插件",
           "description": "",
           "tags": [],
-          "lastModified": "2025-02-28T16:45:53.562Z",
+          "lastModified": "2025-02-28T16:48:08.502Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -171,7 +171,7 @@
               "slug": "友情插件",
               "description": "",
               "tags": [],
-              "lastModified": "2025-02-28T16:45:53.562Z",
+              "lastModified": "2025-02-28T16:48:08.502Z",
               "language": "en",
               "translations": {}
             }
