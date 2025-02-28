@@ -17,6 +17,8 @@ function initBasePath() {
 class FAQApp {
     constructor() {
         this.categories = [];
+        this.languages = null;
+        this.currentLanguage = localStorage.getItem('selectedLanguage') || LANGUAGE_CONFIG.default;
         this.searchEngine = new SearchEngine();
         this.currentArticle = null;
         this.lastIndexCheck = 0;
@@ -54,7 +56,8 @@ class FAQApp {
             
             if (currentHash !== newHash) {
                 console.log('检测到文章更新，正在刷新...');
-                this.categories = newIndex;
+                this.categories = newIndex.categories;
+                this.languages = newIndex.languages;
                 this.renderCategories();
                 // 强制重新加载当前文章（如果有）
                 const hash = window.location.hash;
@@ -105,7 +108,21 @@ class FAQApp {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        this.categories = await response.json();
+        const data = await response.json();
+        this.categories = data.categories;
+        this.languages = data.languages;
+        
+        // 设置语言选择器
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.innerHTML = this.languages.supported.map(lang => 
+            `<option value="${lang}">${this.languages.labels[lang]}</option>`
+        ).join('');
+        languageSelector.value = this.currentLanguage;
+        languageSelector.addEventListener('change', (e) => {
+            this.currentLanguage = e.target.value;
+            localStorage.setItem('selectedLanguage', this.currentLanguage);
+            this.reloadCurrentArticle();
+        });
     }
 
     renderCategories() {
@@ -204,9 +221,9 @@ class FAQApp {
         `;
         
         try {
-            const path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md?v=${CONFIG.cacheVersion}`;
-            console.log('尝试加载文章:', path);
-            const response = await fetch(path, {
+            // 首先尝试加载当前语言版本
+            let path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}${this.currentLanguage === LANGUAGE_CONFIG.default ? '' : '.' + this.currentLanguage}.md?v=${CONFIG.cacheVersion}`;
+            let response = await fetch(path, {
                 method: 'GET',
                 headers: {
                     'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -214,6 +231,21 @@ class FAQApp {
                     'Expires': '0'
                 }
             });
+
+            // 如果当前语言版本不存在，回退到默认语言版本
+            if (!response.ok && this.currentLanguage !== LANGUAGE_CONFIG.default) {
+                console.log(`当前语言版本 (${this.currentLanguage}) 不存在，使用默认语言版本`);
+                path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md?v=${CONFIG.cacheVersion}`;
+                response = await fetch(path, {
+                    method: 'GET',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+            }
+
             if (!response.ok) throw new Error(`文章加载失败 (${response.status})`);
             
             const markdown = await response.text();
@@ -298,12 +330,15 @@ class FAQApp {
             articleContent.innerHTML = `
                 <div class="error-message">
                     <h2>加载失败</h2>
-                    <p>${error.message}</p>
-                    <p>路径: ${path}</p>
-                    <p>基础路径: ${CONFIG.basePath}</p>
+                    <p>无法加载文档</p>
+                    <p>错误信息: ${error.message}</p>
                 </div>
             `;
         }
+
+        // 更新 URL hash
+        window.location.hash = `${category}/${slug}`;
+        this.currentArticle = { slug, category };
     }
 
     renderArticle(content) {
@@ -524,6 +559,12 @@ class FAQApp {
                 }
             });
         });
+    }
+
+    reloadCurrentArticle() {
+        if (this.currentArticle) {
+            this.loadArticle(this.currentArticle.slug, this.currentArticle.category);
+        }
     }
 }
 

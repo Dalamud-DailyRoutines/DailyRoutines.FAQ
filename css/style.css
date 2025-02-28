@@ -1022,17 +1022,36 @@ body {
 }
 
 .header-button {
-    padding: 0.5rem 1rem;
-    background-color: var(--primary-color);
-    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
     text-decoration: none;
-    border-radius: 0.5rem;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
+    transition: background-color 0.2s;
+    margin-left: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#language-selector {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 32px;
+}
+
+#language-selector:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .header-button:hover {
-    background-color: var(--secondary-color);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 暗黑模式适配 */
