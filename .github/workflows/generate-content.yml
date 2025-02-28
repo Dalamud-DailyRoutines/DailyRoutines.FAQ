@@ -11,11 +11,13 @@ on:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 授予写入仓库的权限
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          token: ${{ secrets.GITHUB_TOKEN }}  # 使用标准令牌认证
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
