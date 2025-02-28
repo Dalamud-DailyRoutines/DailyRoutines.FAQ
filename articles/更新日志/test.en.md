@@ -1,3 +1,9 @@
+---
+title: v1.4.2.0 Update Note 
+tags: [Update Note]
+---
+
+
 # Daily Routines has been updated to Version 1.4.2.0.
 
 ## Modifications on Daily Routines
