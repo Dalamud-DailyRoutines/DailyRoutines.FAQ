@@ -1,7 +1,8 @@
 // 配置参数
 const CONFIG = {
     articlesPath: './articles',
-    indexFile: './articles.json'
+    indexFile: './articles.json',
+    basePath: window.location.pathname.replace(/\/[^/]*$/, '') || '.'
 };
 
 class FAQApp {
@@ -21,7 +22,7 @@ class FAQApp {
     }
 
     async loadIndex() {
-        const response = await fetch(CONFIG.indexFile);
+        const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}`);
         this.categories = await response.json();
     }
 
@@ -120,7 +121,7 @@ class FAQApp {
         `;
         
         try {
-            const path = `${CONFIG.articlesPath}/${category}/${slug}.md`;
+            const path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md`;
             const response = await fetch(path);
             if (!response.ok) throw new Error('文章加载失败');
             
@@ -140,6 +141,7 @@ class FAQApp {
                 <div class="error-message">
                     <h2>加载失败</h2>
                     <p>${error.message}</p>
+                    <p>路径: ${path}</p>
                 </div>
             `;
         }
