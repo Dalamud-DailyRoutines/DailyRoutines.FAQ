@@ -27,6 +27,7 @@ class FAQApp {
         }
         
         this.categories = [];
+        this.categoryWeights = {}; // 添加分类权重存储
         
         // 获取本地存储的语言设置或浏览器语言
         const savedLanguage = localStorage.getItem('selectedLanguage');
@@ -100,6 +101,18 @@ class FAQApp {
             if (currentHash !== newHash) {
                 console.log('检测到文章更新，正在刷新...');
                 this.categories = newIndex.categories;
+                this.categoryWeights = newIndex.categoryWeights || {}; // 更新分类权重
+                
+                // 根据权重重新排序分类
+                this.categories.sort((a, b) => {
+                    const weightA = this.categoryWeights[a.name] || 0;
+                    const weightB = this.categoryWeights[b.name] || 0;
+                    if (weightA === weightB) {
+                        return a.name.localeCompare(b.name);
+                    }
+                    return weightB - weightA;
+                });
+                
                 this.renderCategories();
                 // 强制重新加载当前文章（如果有）
                 const hash = window.location.hash;
@@ -153,7 +166,18 @@ class FAQApp {
         }
         const data = await response.json();
         this.categories = data.categories;
+        this.categoryWeights = data.categoryWeights || {}; // 加载分类权重
         
+        // 根据权重重新排序分类
+        this.categories.sort((a, b) => {
+            const weightA = this.categoryWeights[a.name] || 0;
+            const weightB = this.categoryWeights[b.name] || 0;
+            if (weightA === weightB) {
+                return a.name.localeCompare(b.name);
+            }
+            return weightB - weightA;
+        });
+
         // 设置语言选择器
         const languageSelector = document.getElementById('language-selector');
         languageSelector.innerHTML = window.LANGUAGE_CONFIG.supported.map(lang => 

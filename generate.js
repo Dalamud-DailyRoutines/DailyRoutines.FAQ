@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const frontmatter = require('front-matter');
-const { LANGUAGE_CONFIG } = require('./js/config.js');
+const { LANGUAGE_CONFIG, CATEGORY_WEIGHTS } = require('./js/config.js');
 
 const articlesDir = path.join(__dirname, 'articles');
 const outputFile = path.join(__dirname, 'articles.json');
@@ -104,13 +104,21 @@ function generateIndex() {
         });
     });
 
-    // 按分类名称排序
-    categories.sort((a, b) => a.name.localeCompare(b.name));
+    // 按分类权重排序，权重相同时按名称排序
+    categories.sort((a, b) => {
+        const weightA = CATEGORY_WEIGHTS[a.name] || 0;
+        const weightB = CATEGORY_WEIGHTS[b.name] || 0;
+        if (weightA === weightB) {
+            return a.name.localeCompare(b.name);
+        }
+        return weightB - weightA;
+    });
 
     // 写入 JSON 文件
     try {
         fs.writeFileSync(outputFile, JSON.stringify({
             config: LANGUAGE_CONFIG,
+            categoryWeights: CATEGORY_WEIGHTS, // 添加权重配置到输出
             categories: categories
         }, null, 2));
         console.log('✅ 索引生成成功！');
