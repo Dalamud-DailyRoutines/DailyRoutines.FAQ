@@ -25,6 +25,17 @@
         "slug": "login",
         "description": "",
         "tags": []
+      },
+      {
+        "title": "安装 / 更新 / 启动相关",
+        "date": "2024-02-28",
+        "slug": "Install-Update-Launch",
+        "description": "",
+        "tags": [
+          "安装",
+          "更新",
+          "启动"
+        ]
       }
     ]
   }
