@@ -1,17 +1,46 @@
 class SearchEngine {
     constructor() {
+        // 自定义分词器，提高中文搜索效果
+        const encoder = str => {
+            // 将字符串转换为小写并移除特殊字符
+            str = str.toLowerCase().replace(/[^\u4e00-\u9fa5a-z0-9]/g, ' ');
+            // 对中文进行字符级分词
+            return str.split('').filter(char => char.trim());
+        };
+
         this.index = new FlexSearch.Document({
             document: {
                 id: "id",
-                index: ["title", "content", "category", "tags"],
+                index: [
+                    {
+                        field: "title",
+                        tokenize: "full",
+                        encode: encoder
+                    },
+                    {
+                        field: "content",
+                        tokenize: "full",
+                        encode: encoder
+                    },
+                    {
+                        field: "category",
+                        tokenize: "full",
+                        encode: encoder
+                    },
+                    {
+                        field: "tags",
+                        tokenize: "full",
+                        encode: encoder
+                    }
+                ],
                 store: ["title", "category", "tags", "date", "slug"]
             },
-            tokenize: "forward",
-            resolution: 9,
+            tokenize: "full",
             optimize: true,
+            resolution: 9,
             cache: true
         });
-        this.documents = [];
+        this.documents = new Map();
     }
 
     async init() {
@@ -20,7 +49,7 @@ class SearchEngine {
             if (!response.ok) throw new Error('无法加载文章索引');
             
             const categories = await response.json();
-            this.documents = [];
+            this.documents.clear();
             
             for (const category of categories) {
                 for (const article of category.articles) {
@@ -40,7 +69,7 @@ class SearchEngine {
                             content: content.replace(/^---[\s\S]*?---/, '').replace(/#+/g, '').trim() // 移除frontmatter和标题标记
                         };
                         
-                        this.documents.push(doc);
+                        this.documents.set(doc.id, doc);
                         this.index.add(doc);
                     } catch (error) {
                         console.error(`加载文章内容失败: ${article.slug}`, error);
@@ -74,13 +103,17 @@ class SearchEngine {
         
         results.forEach(result => {
             result.result.forEach(item => {
-                if (!uniqueResults.has(item.id)) {
-                    uniqueResults.set(item.id, {
-                        ...item,
+                const docId = item.id;
+                const doc = this.documents.get(docId);
+                if (!doc) return;
+
+                if (!uniqueResults.has(docId)) {
+                    uniqueResults.set(docId, {
+                        ...doc,
                         score: result.field === 'title' ? 2 : 1
                     });
                 } else {
-                    const existing = uniqueResults.get(item.id);
+                    const existing = uniqueResults.get(docId);
                     existing.score += result.field === 'title' ? 2 : 1;
                 }
             });
@@ -94,15 +127,23 @@ class SearchEngine {
 
     searchByTag(tag) {
         if (!tag) return [];
-        return this.documents.filter(doc => 
-            doc.tags && doc.tags.some(t => t.toLowerCase() === tag.toLowerCase())
-        );
+        const results = [];
+        for (const doc of this.documents.values()) {
+            if (doc.tags && doc.tags.some(t => t.toLowerCase() === tag.toLowerCase())) {
+                results.push(doc);
+            }
+        }
+        return results;
     }
 
     searchByCategory(category) {
         if (!category) return [];
-        return this.documents.filter(doc => 
-            doc.category.toLowerCase() === category.toLowerCase()
-        );
+        const results = [];
+        for (const doc of this.documents.values()) {
+            if (doc.category.toLowerCase() === category.toLowerCase()) {
+                results.push(doc);
+            }
+        }
+        return results;
     }
 } 
