@@ -494,7 +494,10 @@ class FAQApp {
         // 为搜索结果添加点击事件
         searchResults.querySelectorAll('.search-result-item').forEach(item => {
             item.addEventListener('click', () => {
-                this.loadArticle(item.dataset.slug, item.dataset.category);
+                this.loadArticle(
+                    item.dataset.slug, 
+                    item.dataset.category // 修正参数顺序
+                );
                 searchResults.innerHTML = '';
                 document.getElementById('search-input').value = '';
             });

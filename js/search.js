@@ -111,11 +111,11 @@ class SearchEngine {
             if (!result.result || !Array.isArray(result.result)) return;
             
             result.result.forEach(item => {
-                const docId = item.id;
+                const docId = item.doc.id;
                 const doc = this.documents.get(docId);
                 
                 if (!doc) {
-                    console.warn('未找到文档:', docId); // 调试日志
+                    console.warn('未找到文档:', docId);
                     return;
                 }
 
