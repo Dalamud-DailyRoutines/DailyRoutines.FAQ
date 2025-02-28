@@ -6,25 +6,28 @@
         "title": "Daily Routines 1.4.2.0 版本更新",
         "date": "2025-02-28",
         "slug": "测试",
-        "description": "文章描述（可选）",
+        "description": "",
         "tags": [
           "标签1",
           "标签2"
-        ]
+        ],
+        "lastModified": "2025-02-28T06:07:40.470Z"
       },
       {
         "title": "注册指南",
         "date": "2025-02-28",
         "slug": "register",
         "description": "",
-        "tags": []
+        "tags": [],
+        "lastModified": "2025-02-28T06:07:40.470Z"
       },
       {
         "title": "登录指南",
         "date": "2025-02-28",
         "slug": "login",
         "description": "",
-        "tags": []
+        "tags": [],
+        "lastModified": "2025-02-28T06:07:40.470Z"
       },
       {
         "title": "安装 / 更新 / 启动相关",
@@ -35,7 +38,8 @@
           "安装",
           "更新",
           "启动"
-        ]
+        ],
+        "lastModified": "2025-02-28T06:07:40.470Z"
       }
     ]
   }
