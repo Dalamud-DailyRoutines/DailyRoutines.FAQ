@@ -973,10 +973,21 @@ body {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.2s;
+    color: #4b5563;
 }
 
 .recent-article-item:hover {
     background-color: var(--hover-bg);
+}
+
+/* 暗黑模式文章标题颜色适配 */
+[data-theme="dark"] .recent-article-item {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .recent-article-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--dark-primary);
 }
 
 /* 暗黑模式适配 */

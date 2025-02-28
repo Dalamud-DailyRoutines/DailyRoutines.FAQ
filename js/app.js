@@ -51,6 +51,25 @@ class FAQApp {
         this.setupAutoRefresh();
     }
 
+    // 添加翻译辅助函数
+    t(key) {
+        const keys = key.split('.');
+        let value = window.TRANSLATIONS[this.currentLanguage];
+        for (const k of keys) {
+            if (!value || !value[k]) {
+                console.warn(`Translation missing for key: ${key} in language: ${this.currentLanguage}`);
+                // 回退到默认语言
+                value = window.TRANSLATIONS[window.LANGUAGE_CONFIG.default];
+                for (const defaultK of keys) {
+                    value = value[defaultK];
+                }
+                break;
+            }
+            value = value[k];
+        }
+        return value;
+    }
+
     setupAutoRefresh() {
         // 每分钟检查一次更新
         setInterval(() => this.checkForUpdates(), 60000);
@@ -107,13 +126,14 @@ class FAQApp {
             this.setupTheme();
             this.setupNavigation();
             this.setupSearch();
+            this.updatePageTitle();
         } catch (error) {
             console.error('初始化失败:', error);
             document.getElementById('category-list').innerHTML = `
                 <div class="error-message">
-                    <h2>加载失败</h2>
-                    <p>无法加载文档索引</p>
-                    <p>错误信息: ${error.message}</p>
+                    <h2>${this.t('errors.loadFailed')}</h2>
+                    <p>${this.t('errors.indexLoadError')}</p>
+                    <p>${this.t('errors.errorMessage')}: ${error.message}</p>
                 </div>
             `;
         }
@@ -143,49 +163,119 @@ class FAQApp {
         languageSelector.addEventListener('change', (e) => {
             this.currentLanguage = e.target.value;
             localStorage.setItem('selectedLanguage', this.currentLanguage);
+            this.updatePageTitle();
+            this.renderCategories(); // 重新渲染分类和文章列表
             this.reloadCurrentArticle();
         });
     }
 
-    renderCategories() {
+    // 获取文章在当前语言下的标题
+    async getArticleTitle(article, category) {
+        // 如果文章本身有多语言标题，直接使用
+        if (article.titles && article.titles[this.currentLanguage]) {
+            return article.titles[this.currentLanguage];
+        }
+
+        // 否则尝试从文章文件中获取标题
+        try {
+            const path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${article.slug}${this.currentLanguage === window.LANGUAGE_CONFIG.default ? '' : '.' + this.currentLanguage}.md?v=${CONFIG.cacheVersion}`;
+            const response = await fetch(path, {
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
+
+            if (response.ok) {
+                const content = await response.text();
+                const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---\n/);
+                if (frontmatterMatch) {
+                    const frontmatter = frontmatterMatch[1];
+                    const titleMatch = frontmatter.match(/title:\s*(.+)/);
+                    if (titleMatch) {
+                        return titleMatch[1].trim();
+                    }
+                }
+            }
+        } catch (error) {
+            console.warn(`无法获取文章 ${article.slug} 的 ${this.currentLanguage} 标题:`, error);
+        }
+
+        // 如果获取失败，返回默认标题
+        return article.title;
+    }
+
+    async renderCategories() {
         const container = document.getElementById('category-list');
         const categoryNav = document.getElementById('category-nav');
         
         // 渲染主页分类卡片
-        container.innerHTML = this.categories.map(category => `
-            <div class="category-card">
-                <div class="category-card-header">
-                    <div class="category-icon">${category.name[0]}</div>
-                    <h2 class="category-title">${category.name}</h2>
-                </div>
-                <ul class="recent-articles">
-                    ${category.articles.slice(0, CONFIG.recentArticlesCount).map(article => `
+        container.innerHTML = '<div class="loading"><div class="loader"></div><p>' + this.t('loading.index') + '</p></div>';
+        categoryNav.innerHTML = ''; // 清空导航
+
+        // 为每个分类异步获取文章标题
+        const categoriesHTML = await Promise.all(this.categories.map(async category => {
+            const recentArticles = await Promise.all(
+                category.articles.slice(0, CONFIG.recentArticlesCount).map(async article => {
+                    const title = await this.getArticleTitle(article, category.name);
+                    return `
                         <li class="recent-article-item" 
                             data-slug="${article.slug}"
                             data-category="${category.name}">
-                            ${article.title}
+                            ${title}
                             ${article.date ? `<span class="article-date-small">${article.date}</span>` : ''}
                         </li>
-                    `).join('')}
-                </ul>
-            </div>
-        `).join('');
+                    `;
+                })
+            );
 
-        // 渲染侧边栏导航
-        categoryNav.innerHTML = this.categories.map(category => `
-            <div class="nav-category">
-                <h4 class="nav-category-title">${category.name}</h4>
-                <ul class="nav-article-list">
-                    ${category.articles.map(article => `
+            return `
+                <div class="category-card">
+                    <div class="category-card-header">
+                        <div class="category-icon">${category.name[0]}</div>
+                        <h2 class="category-title">${category.name}</h2>
+                    </div>
+                    <ul class="recent-articles">
+                        ${recentArticles.join('')}
+                    </ul>
+                </div>
+            `;
+        }));
+
+        container.innerHTML = categoriesHTML.join('');
+
+        // 异步渲染侧边栏导航
+        const navHTML = await Promise.all(this.categories.map(async category => {
+            const articlesList = await Promise.all(
+                category.articles.map(async article => {
+                    const title = await this.getArticleTitle(article, category.name);
+                    return `
                         <li class="nav-article-item" 
                             data-slug="${article.slug}"
                             data-category="${category.name}">
-                            ${article.title}
+                            ${title}
                         </li>
-                    `).join('')}
-                </ul>
-            </div>
-        `).join('');
+                    `;
+                })
+            );
+
+            return `
+                <div class="nav-category">
+                    <h4 class="nav-category-title">${category.name}</h4>
+                    <ul class="nav-article-list">
+                        ${articlesList.join('')}
+                    </ul>
+                </div>
+            `;
+        }));
+
+        categoryNav.innerHTML = navHTML.join('');
+
+        // 重新绑定事件监听器
+        this.setupEventListeners();
+        this.setupCategoryState();
     }
 
     setupEventListeners() {
@@ -238,7 +328,7 @@ class FAQApp {
         articleContent.innerHTML = `
             <div class="loading">
                 <div class="loader"></div>
-                <p>正在加载文档...</p>
+                <p>${this.t('loading.article')}</p>
             </div>
         `;
         
@@ -519,13 +609,14 @@ class FAQApp {
                 this.renderSearchResults(results);
             }
         });
+
+        searchInput.placeholder = this.t('search.placeholder');
     }
 
     renderSearchResults(results) {
-        const searchResults = document.getElementById('search-results');
-        
-        if (!results || results.length === 0) {
-            searchResults.innerHTML = '<div class="no-results">未找到相关文档</div>';
+        const container = document.getElementById('search-results');
+        if (results.length === 0) {
+            container.innerHTML = `<div class="no-results">${this.t('search.noResults')}</div>`;
             return;
         }
 
@@ -546,16 +637,16 @@ class FAQApp {
             </div>
         `).join('');
 
-        searchResults.innerHTML = html;
+        container.innerHTML = html;
 
         // 为搜索结果添加点击事件
-        searchResults.querySelectorAll('.search-result-item').forEach(item => {
+        container.querySelectorAll('.search-result-item').forEach(item => {
             item.addEventListener('click', () => {
                 this.loadArticle(
                     item.dataset.slug, 
                     item.dataset.category // 修正参数顺序
                 );
-                searchResults.innerHTML = '';
+                container.innerHTML = '';
                 document.getElementById('search-input').value = '';
             });
 
@@ -564,7 +655,7 @@ class FAQApp {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     this.loadArticle(item.dataset.slug, item.dataset.category);
-                    searchResults.innerHTML = '';
+                    container.innerHTML = '';
                     document.getElementById('search-input').value = '';
                 } else if (e.key === 'ArrowDown') {
                     e.preventDefault();
@@ -587,6 +678,12 @@ class FAQApp {
         if (this.currentArticle) {
             this.loadArticle(this.currentArticle.slug, this.currentArticle.category);
         }
+    }
+
+    updatePageTitle() {
+        document.title = this.t('siteTitle');
+        document.querySelector('.site-title').textContent = this.t('siteTitle');
+        document.querySelector('.sidebar-title').textContent = this.t('siteTitle');
     }
 }
 
