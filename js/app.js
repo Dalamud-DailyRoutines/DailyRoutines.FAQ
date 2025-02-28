@@ -144,12 +144,79 @@ class FAQApp {
         
         try {
             const path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md`;
-            console.log('尝试加载文章:', path); // 调试日志
+            console.log('尝试加载文章:', path);
             const response = await fetch(path);
             if (!response.ok) throw new Error(`文章加载失败 (${response.status})`);
             
             const markdown = await response.text();
-            this.renderArticle(marked.parse(markdown));
+            
+            // 解析 frontmatter
+            const frontmatterMatch = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+            if (frontmatterMatch) {
+                const [_, frontmatterContent, markdownContent] = frontmatterMatch;
+                const frontmatter = {};
+                frontmatterContent.split('\n').forEach(line => {
+                    const [key, ...values] = line.split(':').map(s => s.trim());
+                    if (key && values.length) {
+                        // 处理数组类型的值（如 tags）
+                        if (values[0].startsWith('[')) {
+                            frontmatter[key] = values.join(':')
+                                .replace(/[\[\]]/g, '')
+                                .split(',')
+                                .map(tag => tag.trim());
+                        } else {
+                            frontmatter[key] = values.join(':').trim();
+                        }
+                    }
+                });
+
+                // 构建文章头部 HTML
+                let articleHeader = `
+                    <div class="article-header">
+                        <div class="version-badge">${frontmatter.title.includes('版本更新') ? frontmatter.title.match(/\d+\.\d+\.\d+\.\d+/)[0] : ''}</div>
+                        <h1>${frontmatter.title}</h1>
+                        ${frontmatter.date ? `
+                            <div class="article-meta">
+                                <div class="article-date">
+                                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V19a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4Zm0,15H5V8H19Z"/>
+                                    </svg>
+                                    更新日期：${frontmatter.date}
+                                </div>
+                                ${frontmatter.tags ? `
+                                    <div class="article-tags">
+                                        ${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                        ${frontmatter.description ? `
+                            <div class="article-description">
+                                <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                                    <path fill="currentColor" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm0-8.5a1,1,0,0,0-1,1v3a1,1,0,0,0,2,0v-3A1,1,0,0,0,12,11.5Zm0-4a1.25,1.25,0,1,0,1.25,1.25A1.25,1.25,0,0,0,12,7.5Z"/>
+                                </svg>
+                                ${frontmatter.description}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+
+                // 处理更新日志的特殊样式
+                let processedContent = markdownContent;
+                if (frontmatter.title.includes('版本更新')) {
+                    processedContent = processedContent.replace(/^## (.+)$/gm, '<h2 class="update-section">$1</h2>');
+                    processedContent = processedContent.replace(/^### (.+)$/gm, '<h3 class="module-title">$1</h3>');
+                    processedContent = processedContent.replace(/^- (.+)$/gm, '<li class="update-item">$1</li>');
+                    processedContent = processedContent.replace(/\[@([^\]]+)\]/g, '<span class="contributor">@$1</span>');
+                }
+
+                // 渲染文章内容
+                this.renderArticle(articleHeader + marked.parse(processedContent));
+            } else {
+                // 如果没有 frontmatter，直接渲染全部内容
+                this.renderArticle(marked.parse(markdown));
+            }
+            
             window.location.hash = `#${category}/${slug}`;
 
             const savedProgress = localStorage.getItem(`progress:${window.location.hash}`);
@@ -160,7 +227,7 @@ class FAQApp {
                 });
             }
         } catch (error) {
-            console.error('加载文章失败:', error); // 调试日志
+            console.error('加载文章失败:', error);
             articleContent.innerHTML = `
                 <div class="error-message">
                     <h2>加载失败</h2>
