@@ -1,43 +1,21 @@
 [
-    {
-        "name": "入门指南",
-        "articles": [
-            {
-                "title": "安装指南",
-                "slug": "installation"
-            },
-            {
-                "title": "配置说明",
-                "slug": "configuration"
-            }
-        ]
-    },
-    {
-        "name": "高级使用",
-        "articles": [
-            {
-                "title": "插件系统",
-                "slug": "plugins"
-            },
-            {
-                "title": "API 文档",
-                "slug": "api"
-            }
-        ]
-    },
-    {
-        "name": "认证",
-        "articles": [
-            {
-                "title": "登录指南",
-                "date": "2024-02-28",
-                "slug": "login"
-            },
-            {
-                "title": "注册指南",
-                "date": "2024-02-28",
-                "slug": "register"
-            }
-        ]
-    }
-] 
+  {
+    "name": "认证",
+    "articles": [
+      {
+        "title": "注册指南",
+        "date": "2024-02-28",
+        "slug": "register",
+        "description": "",
+        "tags": []
+      },
+      {
+        "title": "登录指南",
+        "date": "2024-02-28",
+        "slug": "login",
+        "description": "",
+        "tags": []
+      }
+    ]
+  }
+]
