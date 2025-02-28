@@ -3,22 +3,6 @@
     "name": "常见问题",
     "articles": [
       {
-        "title": "注册指南",
-        "date": "2025-02-28",
-        "slug": "register",
-        "description": "",
-        "tags": [],
-        "lastModified": "2025-02-28T11:17:49.111Z"
-      },
-      {
-        "title": "登录指南",
-        "date": "2025-02-28",
-        "slug": "login",
-        "description": "",
-        "tags": [],
-        "lastModified": "2025-02-28T11:17:49.111Z"
-      },
-      {
         "title": "安装 / 更新 / 启动相关",
         "date": "2025-02-28",
         "slug": "Install-Update-Launch",
@@ -28,7 +12,7 @@
           "更新",
           "启动"
         ],
-        "lastModified": "2025-02-28T11:17:49.111Z"
+        "lastModified": "2025-02-28T11:21:47.577Z"
       }
     ]
   },
@@ -44,7 +28,7 @@
           "标签1",
           "标签2"
         ],
-        "lastModified": "2025-02-28T11:17:49.111Z"
+        "lastModified": "2025-02-28T11:21:47.577Z"
       }
     ]
   }
