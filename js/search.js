@@ -18,15 +18,24 @@ class SearchEngine {
             
             for (const category of categories) {
                 for (const article of category.articles) {
-                    // 将文章信息添加到文档集合
-                    this.documents.push({
-                        id: `${category.name}/${article.slug}`,
-                        title: article.title,
-                        category: category.name,
-                        tags: article.tags || [],
-                        date: article.date,
-                        slug: article.slug
-                    });
+                    try {
+                        // 加载文章内容
+                        const contentResponse = await fetch(`${CONFIG.basePath}/${CONFIG.articlesPath}/${category.name}/${article.slug}.md?v=${CONFIG.cacheVersion}`);
+                        const content = await contentResponse.text();
+                        
+                        // 将文章信息添加到文档集合
+                        this.documents.push({
+                            id: `${category.name}/${article.slug}`,
+                            title: article.title,
+                            category: category.name,
+                            tags: article.tags || [],
+                            date: article.date,
+                            slug: article.slug,
+                            content: content.replace(/^---[\s\S]*?---/, '').replace(/#+/g, '').trim() // 移除frontmatter和标题标记
+                        });
+                    } catch (error) {
+                        console.error(`加载文章内容失败: ${article.slug}`, error);
+                    }
                 }
             }
 
@@ -34,11 +43,12 @@ class SearchEngine {
             this.index = new FlexSearch.Document({
                 document: {
                     id: "id",
-                    index: ["title", "category", "tags"],
+                    index: ["title", "content", "category", "tags"],
                     store: ["title", "category", "tags", "date", "slug"]
                 },
                 tokenize: "forward",
-                language: "zh",
+                resolution: 9,
+                optimize: true,
                 cache: true
             });
             
@@ -59,7 +69,8 @@ class SearchEngine {
         // 执行多字段搜索
         const results = this.index.search(query, {
             enrich: true,
-            suggest: true
+            suggest: true,
+            limit: 20
         });
 
         // 合并搜索结果并去重
@@ -70,13 +81,13 @@ class SearchEngine {
                 if (!uniqueResults.has(item.id)) {
                     uniqueResults.set(item.id, {
                         ...item,
-                        score: 1,
+                        score: field === 'title' ? 2 : 1, // 标题匹配得分加倍
                         matchedField: field
                     });
                 } else {
                     // 如果已存在，增加匹配分数
                     const existing = uniqueResults.get(item.id);
-                    existing.score += 1;
+                    existing.score += field === 'title' ? 2 : 1;
                 }
             });
         });
@@ -89,6 +100,7 @@ class SearchEngine {
 
     // 按标签搜索
     searchByTag(tag) {
+        if (!tag) return [];
         return this.documents.filter(doc => 
             doc.tags && doc.tags.some(t => t.toLowerCase() === tag.toLowerCase())
         );
@@ -96,6 +108,7 @@ class SearchEngine {
 
     // 按分类搜索
     searchByCategory(category) {
+        if (!category) return [];
         return this.documents.filter(doc => 
             doc.category.toLowerCase() === category.toLowerCase()
         );

@@ -397,23 +397,39 @@ class FAQApp {
         // 搜索输入处理
         searchInput.addEventListener('input', (e) => {
             clearTimeout(debounceTimer);
+            const query = e.target.value.trim();
+            
+            // 清空搜索结果
+            if (!query) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            // 延迟执行搜索
             debounceTimer = setTimeout(() => {
-                const query = e.target.value.trim();
-                if (query) {
-                    const results = this.searchEngine.search(query);
-                    this.renderSearchResults(results);
-                } else {
-                    searchResults.innerHTML = '';
-                }
+                const results = this.searchEngine.search(query);
+                this.renderSearchResults(results);
             }, 300);
         });
 
         // 搜索框快捷键
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
+                e.preventDefault();
                 searchInput.value = '';
                 searchResults.innerHTML = '';
                 searchInput.blur();
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                const firstResult = searchResults.querySelector('.search-result-item');
+                if (firstResult) {
+                    this.loadArticle(
+                        firstResult.dataset.slug,
+                        firstResult.dataset.category
+                    );
+                    searchResults.innerHTML = '';
+                    searchInput.value = '';
+                }
             }
         });
 
@@ -428,11 +444,12 @@ class FAQApp {
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('tag')) {
                 e.preventDefault();
+                e.stopPropagation();
                 const tag = e.target.textContent;
                 const results = this.searchEngine.searchByTag(tag);
-                this.renderSearchResults(results);
                 searchInput.value = `#${tag}`;
-                searchResults.scrollIntoView({ behavior: 'smooth' });
+                searchInput.focus();
+                this.renderSearchResults(results);
             }
         });
     }
@@ -440,7 +457,7 @@ class FAQApp {
     renderSearchResults(results) {
         const searchResults = document.getElementById('search-results');
         
-        if (results.length === 0) {
+        if (!results || results.length === 0) {
             searchResults.innerHTML = '<div class="no-results">未找到相关文档</div>';
             return;
         }
