@@ -407,9 +407,11 @@ class FAQApp {
 
             // 延迟执行搜索
             debounceTimer = setTimeout(() => {
+                console.log('执行搜索:', query); // 添加调试日志
                 const results = this.searchEngine.search(query);
+                console.log('搜索结果:', results); // 添加调试日志
                 this.renderSearchResults(results);
-            }, 300);
+            }, 200);
         });
 
         // 搜索框快捷键
@@ -430,6 +432,12 @@ class FAQApp {
                     searchResults.innerHTML = '';
                     searchInput.value = '';
                 }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const firstResult = searchResults.querySelector('.search-result-item');
+                if (firstResult) {
+                    firstResult.focus();
+                }
             }
         });
 
@@ -446,7 +454,9 @@ class FAQApp {
                 e.preventDefault();
                 e.stopPropagation();
                 const tag = e.target.textContent;
+                console.log('点击标签:', tag); // 添加调试日志
                 const results = this.searchEngine.searchByTag(tag);
+                console.log('标签搜索结果:', results); // 添加调试日志
                 searchInput.value = `#${tag}`;
                 searchInput.focus();
                 this.renderSearchResults(results);
@@ -462,8 +472,10 @@ class FAQApp {
             return;
         }
 
+        console.log('渲染搜索结果:', results); // 添加调试日志
+
         const html = results.map(result => `
-            <div class="search-result-item" data-slug="${result.slug}" data-category="${result.category}">
+            <div class="search-result-item" data-slug="${result.slug}" data-category="${result.category}" tabindex="0">
                 <div class="search-result-title">${result.title}</div>
                 <div class="search-result-meta">
                     <span class="search-result-category">${result.category}</span>
@@ -485,6 +497,28 @@ class FAQApp {
                 this.loadArticle(item.dataset.slug, item.dataset.category);
                 searchResults.innerHTML = '';
                 document.getElementById('search-input').value = '';
+            });
+
+            // 添加键盘导航
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.loadArticle(item.dataset.slug, item.dataset.category);
+                    searchResults.innerHTML = '';
+                    document.getElementById('search-input').value = '';
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const next = item.nextElementSibling;
+                    if (next) next.focus();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prev = item.previousElementSibling;
+                    if (prev) {
+                        prev.focus();
+                    } else {
+                        document.getElementById('search-input').focus();
+                    }
+                }
             });
         });
     }
