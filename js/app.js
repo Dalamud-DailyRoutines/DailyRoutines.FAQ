@@ -182,6 +182,26 @@ class FAQApp {
             
             const markdown = await response.text();
             
+            // 配置 marked.js 选项
+            marked.setOptions({
+                gfm: true, // 启用 GitHub 风格的 Markdown
+                breaks: true, // 启用换行符转换为 <br>
+                headerIds: true, // 为标题添加 id
+                mangle: false, // 不转义标题中的特殊字符
+                sanitize: false, // 允许 HTML 标签
+                smartLists: true, // 使用更智能的列表行为
+                smartypants: true, // 使用更智能的标点符号
+                xhtml: false, // 不使用 xhtml 模式
+                highlight: function(code, lang) {
+                    if (lang && hljs.getLanguage(lang)) {
+                        try {
+                            return hljs.highlight(code, { language: lang }).value;
+                        } catch (err) {}
+                    }
+                    return code;
+                }
+            });
+            
             // 解析 frontmatter
             const frontmatterMatch = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
             if (frontmatterMatch) {
@@ -190,7 +210,6 @@ class FAQApp {
                 frontmatterContent.split('\n').forEach(line => {
                     const [key, ...values] = line.split(':').map(s => s.trim());
                     if (key && values.length) {
-                        // 处理数组类型的值（如 tags）
                         if (values[0].startsWith('[')) {
                             frontmatter[key] = values.join(':')
                                 .replace(/[\[\]]/g, '')
@@ -214,20 +233,16 @@ class FAQApp {
                                 ${frontmatter.date}
                             </div>
                         ` : ''}
+                        ${frontmatter.tags ? `
+                            <div class="article-tags">
+                                ${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
                     </div>
                 `;
 
-                // 处理更新日志的特殊样式
-                let processedContent = markdownContent;
-                if (frontmatter.title.includes('版本更新')) {
-                    processedContent = processedContent.replace(/^## (.+)$/gm, '<h2 class="update-section">$1</h2>');
-                    processedContent = processedContent.replace(/^### (.+)$/gm, '<h3 class="module-title">$1</h3>');
-                    processedContent = processedContent.replace(/^- (.+)$/gm, '<li class="update-item">$1</li>');
-                    processedContent = processedContent.replace(/\[@([^\]]+)\]/g, '<span class="contributor">@$1</span>');
-                }
-
-                // 渲染文章内容
-                this.renderArticle(articleHeader + marked.parse(processedContent));
+                // 直接渲染 Markdown 内容
+                this.renderArticle(articleHeader + marked.parse(markdownContent));
             } else {
                 // 如果没有 frontmatter，直接渲染全部内容
                 this.renderArticle(marked.parse(markdown));
