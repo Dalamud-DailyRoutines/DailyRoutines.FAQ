@@ -26,7 +26,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:47:07.455Z",
+          "lastModified": "2025-02-28T12:49:40.131Z",
           "language": "zh",
           "translations": {}
         },
@@ -40,7 +40,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:47:07.455Z",
+          "lastModified": "2025-02-28T12:49:40.131Z",
           "language": "zh",
           "translations": {}
         },
@@ -54,7 +54,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:47:07.455Z",
+          "lastModified": "2025-02-28T12:49:40.131Z",
           "language": "zh",
           "translations": {}
         },
@@ -68,7 +68,7 @@
             "更新",
             "启动"
           ],
-          "lastModified": "2025-02-28T12:47:07.455Z",
+          "lastModified": "2025-02-28T12:49:40.131Z",
           "language": "zh",
           "translations": {}
         }
@@ -80,15 +80,28 @@
         {
           "title": "Daily Routines 1.4.2.0 版本更新",
           "date": "2025-02-28",
-          "slug": "测试",
+          "slug": "test",
           "description": "",
           "tags": [
             "标签1",
             "标签2"
           ],
-          "lastModified": "2025-02-28T12:47:07.455Z",
+          "lastModified": "2025-02-28T12:49:40.132Z",
           "language": "zh",
-          "translations": {}
+          "translations": {
+            "en": {
+              "title": "v1.4.2.0 Update Note",
+              "date": "2025-02-28",
+              "slug": "test",
+              "description": "",
+              "tags": [
+                "Update Note"
+              ],
+              "lastModified": "2025-02-28T12:49:40.132Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
         }
       ]
     },
@@ -101,7 +114,7 @@
           "slug": "友情插件",
           "description": "",
           "tags": [],
-          "lastModified": "2025-02-28T12:47:07.455Z",
+          "lastModified": "2025-02-28T12:49:40.132Z",
           "language": "zh",
           "translations": {}
         }
