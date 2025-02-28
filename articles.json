@@ -22,71 +22,616 @@
       "name": "常见问题-FAQ",
       "articles": [
         {
-          "title": "Daily Routines 更新后无法打开界面并提示“命令不存在”",
+          "title": "在我使用卫月下载 DR 时提示失败怎么回事",
           "date": "2025-02-28",
-          "slug": "Install-4",
+          "slug": "Example",
           "description": "",
           "tags": [
-            "安装",
-            "更新",
-            "启动"
+            "下载",
+            "失败"
           ],
-          "lastModified": "2025-02-28T16:48:08.502Z",
-          "language": "zh",
-          "translations": {}
-        },
-        {
-          "title": "Daily Routines 无法更新/无法下载/连接库失败怎么办",
-          "date": "2025-02-28",
-          "slug": "Install-3",
-          "description": "",
-          "tags": [
-            "安装",
-            "更新",
-            "启动"
-          ],
-          "lastModified": "2025-02-28T16:48:08.502Z",
-          "language": "zh",
-          "translations": {}
-        },
-        {
-          "title": "为什么插件安装器内没有显示主界面或配置界面的按钮?",
-          "date": "2025-02-28",
-          "slug": "Install-2",
-          "description": "",
-          "tags": [
-            "安装",
-            "更新",
-            "启动"
-          ],
-          "lastModified": "2025-02-28T16:48:08.502Z",
-          "language": "zh",
-          "translations": {}
-        },
-        {
-          "title": "在我使用`卫月（Dalamud）`下载`Daily Routines`时提示失败怎么回事",
-          "date": "2025-02-28",
-          "slug": "Install-1",
-          "description": "",
-          "tags": [
-            "安装",
-            "更新",
-            "启动"
-          ],
-          "lastModified": "2025-02-28T16:48:08.502Z",
+          "lastModified": "2025-02-28T22:28:23.808Z",
           "language": "zh",
           "translations": {
             "en": {
-              "title": "What the fuck? My download stuck!",
+              "title": "A failure when downloading DR through Dalamud",
               "date": "2025-02-28",
-              "slug": "Install-1",
+              "slug": "Example",
               "description": "",
               "tags": [
-                "安装",
-                "更新",
-                "启动"
+                "download",
+                "failure",
+                "fail"
               ],
-              "lastModified": "2025-02-28T16:48:08.502Z",
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRVerify 6",
+          "date": "2025-02-28",
+          "slug": "DRVerify-6",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.807Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRVerify EN 6",
+              "date": "2025-02-28",
+              "slug": "DRVerify-6",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRVerify 5",
+          "date": "2025-02-28",
+          "slug": "DRVerify-5",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.807Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRVerify EN 5",
+              "date": "2025-02-28",
+              "slug": "DRVerify-5",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRVerify 4",
+          "date": "2025-02-28",
+          "slug": "DRVerify-4",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.807Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRVerify EN 4",
+              "date": "2025-02-28",
+              "slug": "DRVerify-4",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRVerify 3",
+          "date": "2025-02-28",
+          "slug": "DRVerify-3",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.807Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRVerify EN 3",
+              "date": "2025-02-28",
+              "slug": "DRVerify-3",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRVerify 2",
+          "date": "2025-02-28",
+          "slug": "DRVerify-2",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.807Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRVerify EN 2",
+              "date": "2025-02-28",
+              "slug": "DRVerify-2",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRVerify 1",
+          "date": "2025-02-28",
+          "slug": "DRVerify-1",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.807Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRVerify EN 1",
+              "date": "2025-02-28",
+              "slug": "DRVerify-1",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRTempQA 2",
+          "date": "2025-02-28",
+          "slug": "DRTempQA-2",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.807Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRTempQA EN 2",
+              "date": "2025-02-28",
+              "slug": "DRTempQA-2",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.807Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRTempQA 1",
+          "date": "2025-02-28",
+          "slug": "DRTempQA-1",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRTempQA EN 1",
+              "date": "2025-02-28",
+              "slug": "DRTempQA-1",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRModule 4",
+          "date": "2025-02-28",
+          "slug": "DRModule-4",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRModule EN 4",
+              "date": "2025-02-28",
+              "slug": "DRModule-4",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRModule 3",
+          "date": "2025-02-28",
+          "slug": "DRModule-3",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRModule EN 3",
+              "date": "2025-02-28",
+              "slug": "DRModule-3",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRModule 2",
+          "date": "2025-02-28",
+          "slug": "DRModule-2",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRModule EN 2",
+              "date": "2025-02-28",
+              "slug": "DRModule-2",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRModule 1",
+          "date": "2025-02-28",
+          "slug": "DRModule-1",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRModule EN 1",
+              "date": "2025-02-28",
+              "slug": "DRModule-1",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 9",
+          "date": "2025-02-28",
+          "slug": "DRMain-9",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 9",
+              "date": "2025-02-28",
+              "slug": "DRMain-9",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 8",
+          "date": "2025-02-28",
+          "slug": "DRMain-8",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 8",
+              "date": "2025-02-28",
+              "slug": "DRMain-8",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 7",
+          "date": "2025-02-28",
+          "slug": "DRMain-7",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 7",
+              "date": "2025-02-28",
+              "slug": "DRMain-7",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 6",
+          "date": "2025-02-28",
+          "slug": "DRMain-6",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.806Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 6",
+              "date": "2025-02-28",
+              "slug": "DRMain-6",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.806Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 5",
+          "date": "2025-02-28",
+          "slug": "DRMain-5",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 5",
+              "date": "2025-02-28",
+              "slug": "DRMain-5",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 4",
+          "date": "2025-02-28",
+          "slug": "DRMain-4",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 4",
+              "date": "2025-02-28",
+              "slug": "DRMain-4",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 3",
+          "date": "2025-02-28",
+          "slug": "DRMain-3",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 3",
+              "date": "2025-02-28",
+              "slug": "DRMain-3",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 2",
+          "date": "2025-02-28",
+          "slug": "DRMain-2",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 2",
+              "date": "2025-02-28",
+              "slug": "DRMain-2",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 10",
+          "date": "2025-02-28",
+          "slug": "DRMain-10",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 10",
+              "date": "2025-02-28",
+              "slug": "DRMain-10",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRMain 1",
+          "date": "2025-02-28",
+          "slug": "DRMain-1",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRMain EN 1",
+              "date": "2025-02-28",
+              "slug": "DRMain-1",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRError 4",
+          "date": "2025-02-28",
+          "slug": "DRError-4",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRError EN 4",
+              "date": "2025-02-28",
+              "slug": "DRError-4",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRError 3",
+          "date": "2025-02-28",
+          "slug": "DRError-3",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRError EN 3",
+              "date": "2025-02-28",
+              "slug": "DRError-3",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRError 2",
+          "date": "2025-02-28",
+          "slug": "DRError-2",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.805Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRError EN 2",
+              "date": "2025-02-28",
+              "slug": "DRError-2",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.805Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRError 1",
+          "date": "2025-02-28",
+          "slug": "DRError-1",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.804Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRError EN 1",
+              "date": "2025-02-28",
+              "slug": "DRError-1",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.804Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRClass 2",
+          "date": "2025-02-28",
+          "slug": "DRClass-2",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.804Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRClass EN 2",
+              "date": "2025-02-28",
+              "slug": "DRClass-2",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.804Z",
+              "language": "en",
+              "translations": {}
+            }
+          }
+        },
+        {
+          "title": "DRClass 1",
+          "date": "2025-02-28",
+          "slug": "DRClass-1",
+          "description": "",
+          "tags": [],
+          "lastModified": "2025-02-28T22:28:23.804Z",
+          "language": "zh",
+          "translations": {
+            "en": {
+              "title": "DRClass EN 1",
+              "date": "2025-02-28",
+              "slug": "DRClass-1",
+              "description": "",
+              "tags": [],
+              "lastModified": "2025-02-28T22:28:23.804Z",
               "language": "en",
               "translations": {}
             }
@@ -106,7 +651,7 @@
             "更新笔记",
             "1.4.2.1"
           ],
-          "lastModified": "2025-02-28T16:48:08.503Z",
+          "lastModified": "2025-02-28T22:28:23.808Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -118,7 +663,7 @@
                 "Update Note",
                 "1.4.2.1"
               ],
-              "lastModified": "2025-02-28T16:48:08.503Z",
+              "lastModified": "2025-02-28T22:28:23.808Z",
               "language": "en",
               "translations": {}
             }
@@ -133,7 +678,7 @@
             "更新笔记",
             "1.4.2.0"
           ],
-          "lastModified": "2025-02-28T16:48:08.503Z",
+          "lastModified": "2025-02-28T22:28:23.808Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -145,7 +690,7 @@
                 "Update Note",
                 "1.4.2.0"
               ],
-              "lastModified": "2025-02-28T16:48:08.502Z",
+              "lastModified": "2025-02-28T22:28:23.808Z",
               "language": "en",
               "translations": {}
             }
@@ -162,7 +707,7 @@
           "slug": "友情插件",
           "description": "",
           "tags": [],
-          "lastModified": "2025-02-28T16:48:08.502Z",
+          "lastModified": "2025-02-28T22:28:23.804Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -171,7 +716,7 @@
               "slug": "友情插件",
               "description": "",
               "tags": [],
-              "lastModified": "2025-02-28T16:48:08.502Z",
+              "lastModified": "2025-02-28T22:28:23.804Z",
               "language": "en",
               "translations": {}
             }
