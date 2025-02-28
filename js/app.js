@@ -17,6 +17,8 @@ function initBasePath() {
 class FAQApp {
     constructor() {
         this.categories = [];
+        this.searchEngine = new SearchEngine();
+        this.currentArticle = null;
         this.lastIndexCheck = 0;
         initBasePath();
         this.init();
@@ -71,12 +73,14 @@ class FAQApp {
     async init() {
         try {
             await this.loadIndex();
+            await this.searchEngine.init();
             this.renderCategories();
             this.setupEventListeners();
             this.checkInitialHash();
             this.setupCategoryState();
             this.setupTheme();
             this.setupNavigation();
+            this.setupSearch();
         } catch (error) {
             console.error('初始化失败:', error);
             document.getElementById('category-list').innerHTML = `
@@ -382,6 +386,89 @@ class FAQApp {
                 e.preventDefault();
                 document.getElementById('search-input').focus();
             }
+        });
+    }
+
+    setupSearch() {
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        let debounceTimer;
+
+        // 搜索输入处理
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const query = e.target.value.trim();
+                if (query) {
+                    const results = this.searchEngine.search(query);
+                    this.renderSearchResults(results);
+                } else {
+                    searchResults.innerHTML = '';
+                }
+            }, 300);
+        });
+
+        // 搜索框快捷键
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+                searchInput.blur();
+            }
+        });
+
+        // 点击搜索结果外部时关闭搜索结果
+        document.addEventListener('click', (e) => {
+            if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+                searchResults.innerHTML = '';
+            }
+        });
+
+        // 标签点击事件
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('tag')) {
+                e.preventDefault();
+                const tag = e.target.textContent;
+                const results = this.searchEngine.searchByTag(tag);
+                this.renderSearchResults(results);
+                searchInput.value = `#${tag}`;
+                searchResults.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    renderSearchResults(results) {
+        const searchResults = document.getElementById('search-results');
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = '<div class="no-results">未找到相关文档</div>';
+            return;
+        }
+
+        const html = results.map(result => `
+            <div class="search-result-item" data-slug="${result.slug}" data-category="${result.category}">
+                <div class="search-result-title">${result.title}</div>
+                <div class="search-result-meta">
+                    <span class="search-result-category">${result.category}</span>
+                    ${result.date ? `<span class="search-result-date">${result.date}</span>` : ''}
+                </div>
+                ${result.tags && result.tags.length > 0 ? `
+                    <div class="search-result-tags">
+                        ${result.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        `).join('');
+
+        searchResults.innerHTML = html;
+
+        // 为搜索结果添加点击事件
+        searchResults.querySelectorAll('.search-result-item').forEach(item => {
+            item.addEventListener('click', () => {
+                this.loadArticle(item.dataset.slug, item.dataset.category);
+                searchResults.innerHTML = '';
+                document.getElementById('search-input').value = '';
+            });
         });
     }
 }

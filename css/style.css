@@ -126,9 +126,68 @@ body {
 }
 
 .search-results {
-    margin-top: 1rem;
-    max-height: 300px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--surface-color);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 0.75rem;
+    margin-top: 0.5rem;
+    max-height: 400px;
     overflow-y: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.search-result-item {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.search-result-title {
+    font-weight: 500;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.search-result-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.search-result-category {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.search-result-date {
+    color: #666;
+}
+
+.search-result-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.no-results {
+    padding: 1rem;
+    text-align: center;
+    color: #666;
 }
 
 .sidebar-nav {
@@ -879,4 +938,39 @@ body {
 
 .recent-article-item:hover {
     background-color: var(--hover-bg);
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .search-results {
+    background: var(--dark-surface);
+    border-color: rgba(255,255,255,0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .search-result-item {
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] .search-result-item:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+[data-theme="dark"] .search-result-title {
+    color: var(--dark-primary);
+}
+
+[data-theme="dark"] .search-result-meta {
+    color: #9aa0a6;
+}
+
+[data-theme="dark"] .search-result-category {
+    color: var(--dark-primary);
+}
+
+[data-theme="dark"] .search-result-date {
+    color: #9aa0a6;
+}
+
+[data-theme="dark"] .no-results {
+    color: #9aa0a6;
 } 
