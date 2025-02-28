@@ -1,28 +1,50 @@
 // 配置参数
 const CONFIG = {
-    articlesPath: './articles',
-    indexFile: './articles.json',
-    basePath: window.location.pathname.replace(/\/[^/]*$/, '') || '.'
+    articlesPath: 'articles',
+    indexFile: 'articles.json',
+    basePath: ''
 };
+
+// 初始化基础路径
+function initBasePath() {
+    const scriptPath = document.currentScript.src;
+    const baseUrl = new URL('.', window.location.href).pathname;
+    CONFIG.basePath = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+}
 
 class FAQApp {
     constructor() {
         this.categories = [];
+        initBasePath();
         this.init();
     }
 
     async init() {
-        await this.loadIndex();
-        this.renderCategories();
-        this.setupEventListeners();
-        this.checkInitialHash();
-        this.setupCategoryState();
-        this.setupTheme();
-        this.setupNavigation();
+        try {
+            await this.loadIndex();
+            this.renderCategories();
+            this.setupEventListeners();
+            this.checkInitialHash();
+            this.setupCategoryState();
+            this.setupTheme();
+            this.setupNavigation();
+        } catch (error) {
+            console.error('初始化失败:', error);
+            document.getElementById('category-list').innerHTML = `
+                <div class="error-message">
+                    <h2>加载失败</h2>
+                    <p>无法加载文档索引</p>
+                    <p>错误信息: ${error.message}</p>
+                </div>
+            `;
+        }
     }
 
     async loadIndex() {
         const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         this.categories = await response.json();
     }
 
@@ -122,8 +144,9 @@ class FAQApp {
         
         try {
             const path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md`;
+            console.log('尝试加载文章:', path); // 调试日志
             const response = await fetch(path);
-            if (!response.ok) throw new Error('文章加载失败');
+            if (!response.ok) throw new Error(`文章加载失败 (${response.status})`);
             
             const markdown = await response.text();
             this.renderArticle(marked.parse(markdown));
@@ -137,11 +160,13 @@ class FAQApp {
                 });
             }
         } catch (error) {
+            console.error('加载文章失败:', error); // 调试日志
             articleContent.innerHTML = `
                 <div class="error-message">
                     <h2>加载失败</h2>
                     <p>${error.message}</p>
                     <p>路径: ${path}</p>
+                    <p>基础路径: ${CONFIG.basePath}</p>
                 </div>
             `;
         }
