@@ -35,34 +35,18 @@ function generateIndex() {
                     return;
                 }
 
-                // 处理日期字段
-                let date = attributes.date;
-                if (date) {
-                    // 如果是 Date 对象，转换为 ISO 字符串
-                    if (date instanceof Date) {
-                        date = date.toISOString().split('T')[0];
-                    }
-                    // 如果是字符串，确保格式为 YYYY-MM-DD
-                    else if (typeof date === 'string') {
-                        const dateMatch = date.match(/^\d{4}-\d{2}-\d{2}/);
-                        if (dateMatch) {
-                            date = dateMatch[0];
-                        } else {
-                            date = new Date().toISOString().split('T')[0];
-                        }
-                    }
-                } else {
-                    // 如果没有日期，使用文件修改时间
-                    const stats = fs.statSync(file);
-                    date = stats.mtime.toISOString().split('T')[0];
-                }
+                // 获取文件的最后修改时间
+                const stats = fs.statSync(file);
+                const lastModified = stats.mtime;
+                const date = lastModified.toISOString().split('T')[0];
 
                 const article = {
                     title: attributes.title,
                     date: date,
                     slug: path.basename(file, '.md'),
                     description: attributes.description || '',
-                    tags: attributes.tags || []
+                    tags: attributes.tags || [],
+                    lastModified: lastModified.toISOString()
                 };
 
                 articles.push(article);

@@ -859,4 +859,24 @@ body {
 [data-theme="dark"] .tag:hover {
     background: var(--dark-primary);
     color: var(--dark-background);
+}
+
+.article-date-small {
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    margin-left: 8px;
+}
+
+.recent-article-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.recent-article-item:hover {
+    background-color: var(--hover-bg);
 } 

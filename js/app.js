@@ -3,7 +3,8 @@ const CONFIG = {
     articlesPath: 'articles',
     indexFile: 'articles.json',
     basePath: '',
-    cacheVersion: Date.now() // 添加缓存版本
+    cacheVersion: Date.now(), // 添加缓存版本
+    recentArticlesCount: 5 // 每个分类显示的最新文章数量
 };
 
 // 初始化基础路径
@@ -115,11 +116,12 @@ class FAQApp {
                     <h2 class="category-title">${category.name}</h2>
                 </div>
                 <ul class="recent-articles">
-                    ${category.articles.slice(0, 3).map(article => `
+                    ${category.articles.slice(0, CONFIG.recentArticlesCount).map(article => `
                         <li class="recent-article-item" 
                             data-slug="${article.slug}"
                             data-category="${category.name}">
                             ${article.title}
+                            ${article.date ? `<span class="article-date-small">${article.date}</span>` : ''}
                         </li>
                     `).join('')}
                 </ul>
