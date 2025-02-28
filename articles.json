@@ -3,6 +3,17 @@
     "name": "认证",
     "articles": [
       {
+        "title": "安装 / 更新 / 启动相关",
+        "date": "2025-02-28",
+        "slug": "Install-Update-Launch",
+        "description": "",
+        "tags": [
+          "安装",
+          "更新",
+          "启动"
+        ]
+      },
+      {
         "title": "Daily Routines 1.4.2.0 版本更新",
         "date": "2024-02-28",
         "slug": "测试",
@@ -25,17 +36,6 @@
         "slug": "login",
         "description": "",
         "tags": []
-      },
-      {
-        "title": "安装 / 更新 / 启动相关",
-        "date": "2024-02-28",
-        "slug": "Install-Update-Launch",
-        "description": "",
-        "tags": [
-          "安装",
-          "更新",
-          "启动"
-        ]
       }
     ]
   }
