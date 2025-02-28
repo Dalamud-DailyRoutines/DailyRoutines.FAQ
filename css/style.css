@@ -974,4 +974,34 @@ body {
 
 [data-theme="dark"] .no-results {
     color: #9aa0a6;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.header-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+.header-button:hover {
+    background-color: var(--secondary-color);
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .header-button {
+    background-color: var(--dark-primary);
+}
+
+[data-theme="dark"] .header-button:hover {
+    background-color: var(--dark-secondary);
 } 
