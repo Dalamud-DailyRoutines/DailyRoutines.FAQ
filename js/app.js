@@ -16,8 +16,18 @@ function initBasePath() {
 
 class FAQApp {
     constructor() {
+        // 确保语言配置存在
+        if (!window.LANGUAGE_CONFIG) {
+            console.error('语言配置未加载！');
+            window.LANGUAGE_CONFIG = {
+                default: 'zh',
+                supported: ['zh'],
+                labels: { 'zh': '中文' }
+            };
+        }
+        
         this.categories = [];
-        this.currentLanguage = localStorage.getItem('selectedLanguage') || LANGUAGE_CONFIG.default;
+        this.currentLanguage = localStorage.getItem('selectedLanguage') || window.LANGUAGE_CONFIG.default;
         this.searchEngine = new SearchEngine();
         this.currentArticle = null;
         this.lastIndexCheck = 0;
@@ -111,8 +121,8 @@ class FAQApp {
         
         // 设置语言选择器
         const languageSelector = document.getElementById('language-selector');
-        languageSelector.innerHTML = LANGUAGE_CONFIG.supported.map(lang => 
-            `<option value="${lang}">${LANGUAGE_CONFIG.labels[lang]}</option>`
+        languageSelector.innerHTML = window.LANGUAGE_CONFIG.supported.map(lang => 
+            `<option value="${lang}">${window.LANGUAGE_CONFIG.labels[lang]}</option>`
         ).join('');
         languageSelector.value = this.currentLanguage;
         languageSelector.addEventListener('change', (e) => {
@@ -219,7 +229,7 @@ class FAQApp {
         
         try {
             // 首先尝试加载当前语言版本
-            let path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}${this.currentLanguage === LANGUAGE_CONFIG.default ? '' : '.' + this.currentLanguage}.md?v=${CONFIG.cacheVersion}`;
+            let path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}${this.currentLanguage === window.LANGUAGE_CONFIG.default ? '' : '.' + this.currentLanguage}.md?v=${CONFIG.cacheVersion}`;
             let response = await fetch(path, {
                 method: 'GET',
                 headers: {
@@ -230,7 +240,7 @@ class FAQApp {
             });
 
             // 如果当前语言版本不存在，回退到默认语言版本
-            if (!response.ok && this.currentLanguage !== LANGUAGE_CONFIG.default) {
+            if (!response.ok && this.currentLanguage !== window.LANGUAGE_CONFIG.default) {
                 console.log(`当前语言版本 (${this.currentLanguage}) 不存在，使用默认语言版本`);
                 path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md?v=${CONFIG.cacheVersion}`;
                 response = await fetch(path, {
