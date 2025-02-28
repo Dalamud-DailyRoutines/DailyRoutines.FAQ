@@ -1,5 +1,5 @@
 ---
-title: Daily Routines 更新后无法打开界面并提示“命令不存在”
+title: 4. Daily Routines 更新后无法打开界面并提示“命令不存在”
 tags: [安装, 更新, 启动]
 ---
 

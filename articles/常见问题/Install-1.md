@@ -1,5 +1,5 @@
 ---
-title: 在我使用`卫月（Dalamud）`下载`Daily Routines`时提示失败怎么回事
+title: 1. 在我使用`卫月（Dalamud）`下载`Daily Routines`时提示失败怎么回事
 tags: [安装, 更新, 启动]
 ---
 
