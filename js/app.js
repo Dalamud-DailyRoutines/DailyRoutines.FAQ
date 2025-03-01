@@ -3,45 +3,15 @@ const CONFIG = {
     articlesPath: 'articles',
     indexFile: 'articles.json',
     basePath: '',
-    get cacheVersion() {
-        return window.APP_VERSION ? window.APP_VERSION.current : Date.now();
-    },
-    recentArticlesCount: 5
+    cacheVersion: Date.now(), // 添加缓存版本
+    recentArticlesCount: 5 // 每个分类显示的最新文章数量
 };
 
 // 初始化基础路径
 function initBasePath() {
+    const scriptPath = document.currentScript.src;
     const baseUrl = new URL('.', window.location.href).pathname;
     CONFIG.basePath = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-}
-
-// 自动检测文件更新的函数
-async function checkFileLastModified(url) {
-    try {
-        const response = await fetch(url, { method: 'HEAD' });
-        const lastModified = response.headers.get('last-modified');
-        return lastModified ? new Date(lastModified).getTime() : Date.now();
-    } catch (error) {
-        console.warn('无法获取文件修改时间:', error);
-        return Date.now();
-    }
-}
-
-// 更新版本时间戳
-async function updateVersionTimestamp() {
-    try {
-        const timestamps = await Promise.all([
-            checkFileLastModified(`${CONFIG.basePath}/${CONFIG.indexFile}`),
-            checkFileLastModified(`${CONFIG.basePath}/js/app.js`),
-            checkFileLastModified(`${CONFIG.basePath}/js/search.js`)
-        ]);
-        
-        // 使用最新的修改时间作为版本号
-        window.APP_VERSION.timestamp = Math.max(...timestamps);
-    } catch (error) {
-        console.warn('更新版本时间戳失败:', error);
-        window.APP_VERSION.timestamp = Date.now();
-    }
 }
 
 class FAQApp {
@@ -797,145 +767,5 @@ class FAQApp {
     }
 }
 
-// 创建加载状态指示器
-function createLoadingIndicator() {
-    const indicator = document.createElement('div');
-    indicator.className = 'loading-indicator';
-    indicator.innerHTML = `
-        <div class="loading-spinner"></div>
-        <div class="loading-text">正在加载文档 (0%)</div>
-        <div class="loading-progress">
-            <div class="progress-bar"></div>
-        </div>
-    `;
-    return indicator;
-}
-
-// 更新加载进度
-function updateLoadingProgress(progress) {
-    const indicator = document.querySelector('.loading-indicator');
-    if (!indicator) return;
-
-    const progressBar = indicator.querySelector('.progress-bar');
-    const loadingText = indicator.querySelector('.loading-text');
-    
-    progressBar.style.width = `${progress.percentage}%`;
-    loadingText.textContent = `正在加载文档 (${progress.percentage}%)`;
-    
-    if (progress.percentage >= 100) {
-        setTimeout(() => {
-            indicator.classList.add('fade-out');
-            setTimeout(() => indicator.remove(), 500);
-        }, 500);
-    }
-}
-
 // 初始化应用
-async function initializeApp() {
-    const loadingIndicator = createLoadingIndicator();
-    document.body.appendChild(loadingIndicator);
-
-    // 初始化搜索引擎
-    window.searchEngine = new SearchEngine();
-    searchEngine.onProgress(updateLoadingProgress);
-
-    try {
-        await searchEngine.init();
-        setupEventListeners();
-        loadInitialContent();
-    } catch (error) {
-        console.error('初始化失败:', error);
-        loadingIndicator.innerHTML = `
-            <div class="loading-error">
-                加载失败，请刷新页面重试<br>
-                <small>${error.message}</small>
-            </div>
-        `;
-    }
-}
-
-// 添加样式
-const style = document.createElement('style');
-style.textContent = `
-    .loading-indicator {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        text-align: center;
-        z-index: 1000;
-        transition: opacity 0.5s;
-    }
-
-    .loading-indicator.fade-out {
-        opacity: 0;
-    }
-
-    .loading-spinner {
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #3498db;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 10px;
-    }
-
-    .loading-text {
-        margin-bottom: 10px;
-        color: #666;
-    }
-
-    .loading-progress {
-        width: 200px;
-        height: 4px;
-        background: #f3f3f3;
-        border-radius: 2px;
-        overflow: hidden;
-    }
-
-    .progress-bar {
-        width: 0;
-        height: 100%;
-        background: #3498db;
-        transition: width 0.3s ease;
-    }
-
-    .loading-error {
-        color: #e74c3c;
-        max-width: 300px;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-`;
-document.head.appendChild(style);
-
-// 防止缓存的资源加载函数
-function loadResource(url, type = 'text/javascript') {
-    return new Promise((resolve, reject) => {
-        const resource = type.includes('javascript') ? document.createElement('script') : document.createElement('link');
-        
-        if (type.includes('javascript')) {
-            resource.type = type;
-            resource.src = `${url}?_=${Date.now()}`;
-        } else {
-            resource.rel = 'stylesheet';
-            resource.href = `${url}?_=${Date.now()}`;
-        }
-
-        resource.onload = () => resolve(resource);
-        resource.onerror = () => reject(new Error(`Failed to load ${url}`));
-        
-        document.head.appendChild(resource);
-    });
-}
-
-// 初始化应用
-document.addEventListener('DOMContentLoaded', initializeApp); 
+new FAQApp(); 
