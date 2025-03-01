@@ -3,7 +3,7 @@ title: 如何查看模块的内部名称
 tags: [模块, 内部名称, DR, Daily Routines]
 ---
 
-## 7. 如何查看模块的内部名称 (作用于`/pdr load` & `/pdr unload`)
+## Q: 如何查看模块的内部名称 (作用于`/pdr load` & `/pdr unload`)
 **A:**
 
 - 1. 右键该模块复选框，名字就显示在里面 
