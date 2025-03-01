@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Daily Routines 信息中心</title>
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet">
+    <script>
+        // 动态版本控制
+        window.APP_VERSION = {
+            timestamp: Date.now(),
+            get current() {
+                return this.timestamp;
+            }
+        };
+    </script>
 </head>
 <body>
     <header class="home-header">
@@ -68,13 +80,52 @@
         </main>
     </div>
 
-    <!-- 按正确的顺序加载脚本 -->
-    <script src="./js/config.js"></script>
-    <script src="./js/translations.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flexsearch@0.7.31/dist/flexsearch.bundle.js"></script>
-    <script src="./js/search.js"></script>
-    <script src="./js/app.js"></script>
+    <!-- 使用异步加载脚本 -->
+    <script>
+        // 资源加载函数
+        function loadResource(url, type = 'text/javascript') {
+            return new Promise((resolve, reject) => {
+                const resource = type.includes('javascript') ? document.createElement('script') : document.createElement('link');
+                const timestamp = window.APP_VERSION.current;
+                
+                if (type.includes('javascript')) {
+                    resource.type = type;
+                    resource.src = `${url}${url.includes('?') ? '&' : '?'}_v=${timestamp}`;
+                } else {
+                    resource.rel = 'stylesheet';
+                    resource.href = `${url}${url.includes('?') ? '&' : '?'}_v=${timestamp}`;
+                }
+
+                resource.onload = () => resolve(resource);
+                resource.onerror = () => reject(new Error(`Failed to load ${url}`));
+                
+                document.head.appendChild(resource);
+            });
+        }
+
+        // 异步加载资源
+        async function loadResources() {
+            const resources = [
+                { url: './js/config.js', type: 'text/javascript' },
+                { url: './js/translations.js', type: 'text/javascript' },
+                { url: 'https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js', type: 'text/javascript' },
+                { url: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js', type: 'text/javascript' },
+                { url: 'https://cdn.jsdelivr.net/npm/flexsearch@0.7.31/dist/flexsearch.bundle.js', type: 'text/javascript' },
+                { url: './js/search.js', type: 'text/javascript' },
+                { url: './js/app.js', type: 'text/javascript' }
+            ];
+
+            for (const resource of resources) {
+                try {
+                    await loadResource(resource.url, resource.type);
+                } catch (error) {
+                    console.error(`Failed to load ${resource.url}:`, error);
+                }
+            }
+        }
+
+        // 开始加载资源
+        loadResources().catch(console.error);
+    </script>
 </body>
 </html> 

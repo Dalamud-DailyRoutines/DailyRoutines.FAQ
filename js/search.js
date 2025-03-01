@@ -44,17 +44,56 @@ class SearchEngine {
             cache: true
         });
         this.documents = new Map();
-        this.loadingPromises = new Map(); // 用于追踪正在加载的文章
+        this.loadingPromises = new Map();
+        this.loadingStatus = {
+            total: 0,
+            loaded: 0,
+            errors: 0
+        };
+        
+        // 添加加载状态事件
+        this.onProgressCallbacks = new Set();
+    }
+
+    // 注册进度回调
+    onProgress(callback) {
+        this.onProgressCallbacks.add(callback);
+        return () => this.onProgressCallbacks.delete(callback);
+    }
+
+    // 更新加载状态
+    updateLoadingStatus(loaded = 0, errors = 0) {
+        this.loadingStatus.loaded += loaded;
+        this.loadingStatus.errors += errors;
+        const progress = {
+            ...this.loadingStatus,
+            percentage: Math.round((this.loadingStatus.loaded / this.loadingStatus.total) * 100)
+        };
+        this.onProgressCallbacks.forEach(callback => callback(progress));
     }
 
     async init() {
         try {
-            const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?v=${CONFIG.cacheVersion}`);
-            if (!response.ok) throw new Error('无法加载文章索引');
+            // 获取最新的索引文件
+            const indexResponse = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?_v=${CONFIG.cacheVersion}`, {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
+            if (!indexResponse.ok) throw new Error('无法加载文章索引');
             
-            const data = await response.json();
+            const data = await indexResponse.json();
             const categories = data.categories;
             this.documents.clear();
+            
+            // 计算总文章数
+            this.loadingStatus = {
+                total: categories.reduce((sum, cat) => sum + cat.articles.length, 0),
+                loaded: 0,
+                errors: 0
+            };
             
             // 按分类批量加载文章
             const loadPromises = categories.map(category => this.loadCategoryArticles(category));
@@ -68,36 +107,48 @@ class SearchEngine {
     }
 
     async loadCategoryArticles(category) {
-        const batchSize = 5; // 每批加载的文章数
+        const batchSize = 10;
         const articles = category.articles;
         
         for (let i = 0; i < articles.length; i += batchSize) {
             const batch = articles.slice(i, i + batchSize);
             const batchPromises = batch.map(article => this.loadArticle(category.name, article));
-            await Promise.all(batchPromises);
+            const results = await Promise.allSettled(batchPromises);
+            
+            // 统计本批次的加载结果
+            const loaded = results.filter(r => r.status === 'fulfilled').length;
+            const errors = results.filter(r => r.status === 'rejected').length;
+            this.updateLoadingStatus(loaded, errors);
         }
     }
 
     async loadArticle(categoryName, article) {
         const articleId = `${categoryName}/${article.slug}`;
         
-        // 如果文章正在加载中，返回现有的 Promise
         if (this.loadingPromises.has(articleId)) {
             return this.loadingPromises.get(articleId);
         }
 
         const loadPromise = (async () => {
             try {
+                // 使用动态版本号加载文章
                 const contentResponse = await fetch(
-                    `${CONFIG.basePath}/${CONFIG.articlesPath}/${categoryName}/${article.slug}.md?v=${CONFIG.cacheVersion}`
+                    `${CONFIG.basePath}/${CONFIG.articlesPath}/${categoryName}/${article.slug}.md?_v=${CONFIG.cacheVersion}`,
+                    {
+                        headers: {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                        }
+                    }
                 );
-                const content = await contentResponse.text();
+                if (!contentResponse.ok) throw new Error(`HTTP ${contentResponse.status}`);
                 
-                // 提取文章内容（移除frontmatter）
+                const content = await contentResponse.text();
                 const processedContent = content
-                    .replace(/^---[\s\S]*?---/, '')  // 移除frontmatter
-                    .replace(/#+\s[^\n]+/g, '')      // 移除标题
-                    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // 提取链接文本
+                    .replace(/^---[\s\S]*?---/, '')
+                    .replace(/#+\s[^\n]+/g, '')
+                    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
                     .trim();
 
                 const doc = {
@@ -112,7 +163,6 @@ class SearchEngine {
 
                 this.documents.set(doc.id, doc);
                 this.index.add(doc);
-
                 return doc;
             } catch (error) {
                 console.error(`加载文章失败: ${articleId}`, error);
