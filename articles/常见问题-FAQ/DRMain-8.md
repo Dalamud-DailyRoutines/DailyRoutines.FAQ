@@ -16,7 +16,8 @@ tags: [兼容性问题, 禁用, Unban, DR, Daily Routines]
       [具体详细公告](https://discord.com/channels/1258981591124938762/1269515530470031454/1343199763717165167)
       [具体更新公告](https://discord.com/channels/1258981591124938762/1343929244769849404)
       ※※※土月早起因为修改，会更新较多，等稳定了后会跟随上游进行更新。介意的话请不要安装。
-
+      ※※※注意是右侧的**release**不是`Github-Readme`界面下方的**release**图标
+  
 - 3.  还可以使用插件 [FuckDalamudCN](https://github.com/decorwdyun/FuckDalamudCN)
 使用方法请点击链接查看，本服务器不提供此插件的问答，如有问题请咨询此插件作者
 
