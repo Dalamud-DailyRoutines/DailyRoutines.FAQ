@@ -30,7 +30,7 @@
             "下载",
             "失败"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -43,7 +43,7 @@
                 "failure",
                 "fail"
               ],
-              "lastModified": "2025-03-01T16:48:19.825Z",
+              "lastModified": "2025-03-01T16:53:11.012Z",
               "language": "en",
               "translations": {}
             }
@@ -60,7 +60,7 @@
             "验证",
             "凭证"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {}
         },
@@ -75,7 +75,7 @@
             "验证",
             "赞助"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {}
         },
@@ -90,7 +90,7 @@
             "验证",
             "赞助"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {}
         },
@@ -105,7 +105,7 @@
             "验证",
             "机器人"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {}
         },
@@ -120,7 +120,7 @@
             "验证",
             "凭证"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {}
         },
@@ -135,7 +135,7 @@
             "验证",
             "口令"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {}
         },
@@ -149,27 +149,34 @@
             "Daily Routines",
             "验证"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
         {
-          "title": "DRTempQA 2",
+          "title": "每次注入完都要手动开启DR",
           "date": "2025-03-01",
           "slug": "DRTempQA-2",
           "description": "",
-          "tags": [],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "tags": [
+            "临时问题",
+            "验证，注入"
+          ],
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
         {
-          "title": "DRTempQA 1",
+          "title": "7.1版本更新后为什么我认证掉了（模块数量不对）",
           "date": "2025-03-01",
           "slug": "DRTempQA-1",
           "description": "",
-          "tags": [],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "tags": [
+            "临时问题",
+            "验证，版本更新",
+            "验证"
+          ],
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -184,7 +191,7 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -199,7 +206,7 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -214,7 +221,7 @@
             "Daily Routines",
             "解析失败"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -228,7 +235,7 @@
             "Daily Routines",
             "模块"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -242,7 +249,7 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-01T16:48:19.825Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -257,7 +264,7 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -271,7 +278,7 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -286,7 +293,7 @@
             "Daily Routines",
             "卫月"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -300,7 +307,7 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -314,7 +321,7 @@
             "Daily Routines",
             "版本号"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -329,7 +336,7 @@
             "该命令不存在",
             "打开按钮"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -343,7 +350,7 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.011Z",
           "language": "zh",
           "translations": {}
         },
@@ -358,7 +365,7 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         },
@@ -373,7 +380,7 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         },
@@ -389,7 +396,7 @@
             "DR",
             "TTS"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         },
@@ -404,7 +411,7 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         },
@@ -419,7 +426,7 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         },
@@ -432,7 +439,7 @@
             "常见故障/报错",
             "卫月"
           ],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         },
@@ -442,7 +449,7 @@
           "slug": "DRClass-2",
           "description": "",
           "tags": [],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         },
@@ -452,7 +459,7 @@
           "slug": "DRClass-1",
           "description": "",
           "tags": [],
-          "lastModified": "2025-03-01T16:48:19.824Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {}
         }
@@ -470,7 +477,7 @@
             "更新笔记",
             "1.4.3.0"
           ],
-          "lastModified": "2025-03-01T16:48:19.826Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -482,7 +489,7 @@
                 "Update Note",
                 "1.4.3.0"
               ],
-              "lastModified": "2025-03-01T16:48:19.826Z",
+              "lastModified": "2025-03-01T16:53:11.012Z",
               "language": "en",
               "translations": {}
             }
@@ -497,7 +504,7 @@
             "更新笔记",
             "1.4.2.0"
           ],
-          "lastModified": "2025-03-01T16:48:19.826Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -509,7 +516,7 @@
                 "Update Note",
                 "1.4.2.0"
               ],
-              "lastModified": "2025-03-01T16:48:19.826Z",
+              "lastModified": "2025-03-01T16:53:11.012Z",
               "language": "en",
               "translations": {}
             }
@@ -524,7 +531,7 @@
             "更新笔记",
             "1.4.2.0"
           ],
-          "lastModified": "2025-03-01T16:48:19.826Z",
+          "lastModified": "2025-03-01T16:53:11.012Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -536,7 +543,7 @@
                 "Update Note",
                 "1.4.2.0"
               ],
-              "lastModified": "2025-03-01T16:48:19.826Z",
+              "lastModified": "2025-03-01T16:53:11.012Z",
               "language": "en",
               "translations": {}
             }
@@ -553,7 +560,7 @@
           "slug": "友情插件",
           "description": "",
           "tags": [],
-          "lastModified": "2025-03-01T16:48:19.823Z",
+          "lastModified": "2025-03-01T16:53:11.010Z",
           "language": "zh",
           "translations": {
             "en": {
@@ -562,7 +569,7 @@
               "slug": "友情插件",
               "description": "",
               "tags": [],
-              "lastModified": "2025-03-01T16:48:19.823Z",
+              "lastModified": "2025-03-01T16:53:11.010Z",
               "language": "en",
               "translations": {}
             }
