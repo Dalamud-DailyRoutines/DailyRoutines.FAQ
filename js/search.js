@@ -21,7 +21,9 @@ class SearchEngine {
                     {
                         field: "content",
                         tokenize: "full",
-                        encode: encoder
+                        encode: encoder,
+                        store: false, // 不存储内容，只索引
+                        weight: 0.3   // 降低内容匹配的权重
                     },
                     {
                         field: "category",
@@ -34,7 +36,7 @@ class SearchEngine {
                         encode: encoder
                     }
                 ],
-                store: true // 存储完整文档
+                store: ["id", "title", "category", "tags", "date", "slug"] // 只存储必要字段
             },
             tokenize: "full",
             optimize: true,
@@ -42,6 +44,7 @@ class SearchEngine {
             cache: true
         });
         this.documents = new Map();
+        this.loadingPromises = new Map(); // 用于追踪正在加载的文章
     }
 
     async init() {
@@ -53,32 +56,9 @@ class SearchEngine {
             const categories = data.categories;
             this.documents.clear();
             
-            for (const category of categories) {
-                for (const article of category.articles) {
-                    try {
-                        // 加载文章内容
-                        const contentResponse = await fetch(`${CONFIG.basePath}/${CONFIG.articlesPath}/${category.name}/${article.slug}.md?v=${CONFIG.cacheVersion}`);
-                        const content = await contentResponse.text();
-                        
-                        // 将文章信息添加到文档集合
-                        const doc = {
-                            id: `${category.name}/${article.slug}`,
-                            title: article.title,
-                            category: category.name,
-                            tags: article.tags || [],
-                            date: article.date,
-                            slug: article.slug,
-                            content: content.replace(/^---[\s\S]*?---/, '').replace(/#+/g, '').trim() // 移除frontmatter和标题标记
-                        };
-                        
-                        this.documents.set(doc.id, doc);
-                        this.index.add(doc);
-                        console.log('添加文档:', doc); // 调试日志
-                    } catch (error) {
-                        console.error(`加载文章内容失败: ${article.slug}`, error);
-                    }
-                }
-            }
+            // 按分类批量加载文章
+            const loadPromises = categories.map(category => this.loadCategoryArticles(category));
+            await Promise.all(loadPromises);
             
             console.log('搜索索引构建完成，总文档数:', this.documents.size);
         } catch (error) {
@@ -87,23 +67,79 @@ class SearchEngine {
         }
     }
 
+    async loadCategoryArticles(category) {
+        const batchSize = 5; // 每批加载的文章数
+        const articles = category.articles;
+        
+        for (let i = 0; i < articles.length; i += batchSize) {
+            const batch = articles.slice(i, i + batchSize);
+            const batchPromises = batch.map(article => this.loadArticle(category.name, article));
+            await Promise.all(batchPromises);
+        }
+    }
+
+    async loadArticle(categoryName, article) {
+        const articleId = `${categoryName}/${article.slug}`;
+        
+        // 如果文章正在加载中，返回现有的 Promise
+        if (this.loadingPromises.has(articleId)) {
+            return this.loadingPromises.get(articleId);
+        }
+
+        const loadPromise = (async () => {
+            try {
+                const contentResponse = await fetch(
+                    `${CONFIG.basePath}/${CONFIG.articlesPath}/${categoryName}/${article.slug}.md?v=${CONFIG.cacheVersion}`
+                );
+                const content = await contentResponse.text();
+                
+                // 提取文章内容（移除frontmatter）
+                const processedContent = content
+                    .replace(/^---[\s\S]*?---/, '')  // 移除frontmatter
+                    .replace(/#+\s[^\n]+/g, '')      // 移除标题
+                    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // 提取链接文本
+                    .trim();
+
+                const doc = {
+                    id: articleId,
+                    title: article.title,
+                    category: categoryName,
+                    tags: article.tags || [],
+                    date: article.date,
+                    slug: article.slug,
+                    content: processedContent
+                };
+
+                this.documents.set(doc.id, doc);
+                this.index.add(doc);
+
+                return doc;
+            } catch (error) {
+                console.error(`加载文章失败: ${articleId}`, error);
+                throw error;
+            } finally {
+                this.loadingPromises.delete(articleId);
+            }
+        })();
+
+        this.loadingPromises.set(articleId, loadPromise);
+        return loadPromise;
+    }
+
     search(query) {
         if (!query || !query.trim()) return [];
-        console.log('执行搜索，查询词:', query); // 调试日志
 
         // 执行多字段搜索
         const searchResults = [];
-        ['title', 'content', 'category', 'tags'].forEach(field => {
+        ['title', 'category', 'tags'].forEach(field => {
             const fieldResults = this.index.search(query, {
                 field: field,
                 limit: 20,
                 suggest: true,
-                enrich: true // 确保返回完整的文档
+                enrich: true
             });
             searchResults.push(...fieldResults);
         });
-
-        console.log('原始搜索结果:', searchResults); // 调试日志
 
         // 合并搜索结果并去重
         const uniqueResults = new Map();
@@ -115,10 +151,7 @@ class SearchEngine {
                 const docId = item.doc.id;
                 const doc = this.documents.get(docId);
                 
-                if (!doc) {
-                    console.warn('未找到文档:', docId);
-                    return;
-                }
+                if (!doc) return;
 
                 if (!uniqueResults.has(docId)) {
                     uniqueResults.set(docId, {
@@ -133,12 +166,9 @@ class SearchEngine {
         });
 
         // 转换为数组并排序
-        const finalResults = Array.from(uniqueResults.values())
+        return Array.from(uniqueResults.values())
             .sort((a, b) => b.score - a.score)
             .slice(0, 10);
-
-        console.log('最终搜索结果:', finalResults); // 调试日志
-        return finalResults;
     }
 
     searchByTag(tag) {
