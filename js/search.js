@@ -68,7 +68,7 @@ class SearchEngine {
     }
 
     async loadCategoryArticles(category) {
-        const batchSize = 5; // 每批加载的文章数
+        const batchSize = 10; // 每批加载的文章数
         const articles = category.articles;
         
         for (let i = 0; i < articles.length; i += batchSize) {

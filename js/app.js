@@ -50,6 +50,7 @@ class FAQApp {
         initBasePath();
         this.init();
         this.setupAutoRefresh();
+        this.setupUpdateNotification();
     }
 
     // 添加翻译辅助函数
@@ -82,16 +83,35 @@ class FAQApp {
         });
     }
 
+    setupUpdateNotification() {
+        // 监听 Service Worker 更新
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                // 显示更新提示
+                this.showUpdateNotification();
+            });
+        }
+    }
+
+    showUpdateNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'update-notification';
+        notification.innerHTML = `
+            <div class="update-message">
+                网站已更新！
+                <button onclick="window.location.reload()">立即刷新</button>
+            </div>
+        `;
+        document.body.appendChild(notification);
+    }
+
     async checkForUpdates() {
         try {
-            const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}?v=${CONFIG.cacheVersion}`, {
+            const response = await fetch(`${CONFIG.basePath}/${CONFIG.indexFile}`, {
                 method: 'GET',
-                headers: {
-                    'Cache-Control': 'no-cache, no-store, must-revalidate',
-                    'Pragma': 'no-cache',
-                    'Expires': '0'
-                }
+                cache: 'no-cache' // 使用 fetch 缓存控制
             });
+            
             if (!response.ok) return;
             
             const newIndex = await response.json();
@@ -101,7 +121,7 @@ class FAQApp {
             if (currentHash !== newHash) {
                 console.log('检测到文章更新，正在刷新...');
                 this.categories = newIndex.categories;
-                this.categoryWeights = newIndex.categoryWeights || {}; // 更新分类权重
+                this.categoryWeights = newIndex.categoryWeights || {};
                 
                 // 根据权重重新排序分类
                 this.categories.sort((a, b) => {
@@ -114,13 +134,10 @@ class FAQApp {
                 });
                 
                 this.renderCategories();
-                // 强制重新加载当前文章（如果有）
-                const hash = window.location.hash;
-                if (hash) {
-                    const [category, slug] = hash.slice(1).split('/');
-                    if (category && slug) {
-                        this.loadArticle(slug, category);
-                    }
+                
+                // 如果有当前文章，重新加载
+                if (this.currentArticle) {
+                    await this.loadArticle(this.currentArticle.slug, this.currentArticle.category);
                 }
             }
         } catch (error) {
@@ -369,27 +386,19 @@ class FAQApp {
         
         try {
             // 首先尝试加载当前语言版本
-            let path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}${this.currentLanguage === window.LANGUAGE_CONFIG.default ? '' : '.' + this.currentLanguage}.md?v=${CONFIG.cacheVersion}`;
+            let path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}${this.currentLanguage === window.LANGUAGE_CONFIG.default ? '' : '.' + this.currentLanguage}.md`;
             let response = await fetch(path, {
                 method: 'GET',
-                headers: {
-                    'Cache-Control': 'no-cache, no-store, must-revalidate',
-                    'Pragma': 'no-cache',
-                    'Expires': '0'
-                }
+                cache: 'no-cache' // 使用 fetch 缓存控制
             });
 
             // 如果当前语言版本不存在，回退到默认语言版本
             if (!response.ok && this.currentLanguage !== window.LANGUAGE_CONFIG.default) {
                 console.log(`当前语言版本 (${this.currentLanguage}) 不存在，使用默认语言版本`);
-                path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md?v=${CONFIG.cacheVersion}`;
+                path = `${CONFIG.basePath}/${CONFIG.articlesPath}/${category}/${slug}.md`;
                 response = await fetch(path, {
                     method: 'GET',
-                    headers: {
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
-                    }
+                    cache: 'no-cache' // 使用 fetch 缓存控制
                 });
             }
 
@@ -398,24 +407,30 @@ class FAQApp {
             const markdown = await response.text();
             
             // 配置 marked.js 选项
-            marked.setOptions({
+            const markedOptions = {
                 gfm: true, // 启用 GitHub 风格的 Markdown
                 breaks: true, // 启用换行符转换为 <br>
-                headerIds: true, // 为标题添加 id
-                mangle: false, // 不转义标题中的特殊字符
-                sanitize: false, // 允许 HTML 标签
-                smartLists: true, // 使用更智能的列表行为
-                smartypants: true, // 使用更智能的标点符号
-                xhtml: false, // 不使用 xhtml 模式
-                highlight: function(code, lang) {
-                    if (lang && hljs.getLanguage(lang)) {
-                        try {
-                            return hljs.highlight(code, { language: lang }).value;
-                        } catch (err) {}
+            };
+
+            // 配置代码高亮
+            marked.use({
+                async: false,
+                gfm: true,
+                breaks: true,
+                renderer: {
+                    code(code, language) {
+                        const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+                        return `<pre><code class="hljs language-${validLanguage}">${
+                            hljs.highlight(code, { language: validLanguage }).value
+                        }</code></pre>`;
                     }
-                    return code;
                 }
             });
+
+            // 配置标题 ID 插件
+            if (window.markedGfmHeadingId) {
+                marked.use(window.markedGfmHeadingId.gfmHeadingId());
+            }
             
             // 解析 frontmatter
             const frontmatterMatch = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
@@ -456,7 +471,7 @@ class FAQApp {
                     </div>
                 `;
 
-                // 直接渲染 Markdown 内容
+                // 使用新版本的 marked API 渲染 Markdown 内容
                 this.renderArticle(articleHeader + marked.parse(markdownContent));
             } else {
                 // 如果没有 frontmatter，直接渲染全部内容
