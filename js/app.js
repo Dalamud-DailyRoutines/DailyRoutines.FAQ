@@ -374,6 +374,12 @@ class FAQApp {
     }
 
     async loadArticle(slug, category) {
+        // 防止重复加载同一篇文章
+        if (this.isArticleLoading && this.currentArticle && this.currentArticle.slug === slug && this.currentArticle.category === category) {
+            return;
+        }
+        
+        this.isArticleLoading = true;
         document.querySelector('.container').classList.remove('hidden');
         document.querySelector('.home-container').classList.add('hidden');
         const articleContent = document.getElementById('article-content');
@@ -478,9 +484,16 @@ class FAQApp {
                 this.renderArticle(marked.parse(markdown));
             }
             
-            window.location.hash = `#${category}/${slug}`;
+            // 更新当前文章信息
+            this.currentArticle = { slug, category };
+            
+            // 使用 replaceState 而不是直接修改 hash，避免触发 hashchange 事件
+            const newHash = `#${category}/${slug}`;
+            if (window.location.hash !== newHash) {
+                history.replaceState(null, null, newHash);
+            }
 
-            const savedProgress = localStorage.getItem(`progress:${window.location.hash}`);
+            const savedProgress = localStorage.getItem(`progress:${newHash}`);
             if (savedProgress) {
                 requestAnimationFrame(() => {
                     articleContent.scrollTop = savedProgress * 
@@ -496,11 +509,9 @@ class FAQApp {
                     <p>错误信息: ${error.message}</p>
                 </div>
             `;
+        } finally {
+            this.isArticleLoading = false;
         }
-
-        // 更新 URL hash
-        window.location.hash = `${category}/${slug}`;
-        this.currentArticle = { slug, category };
     }
 
     renderArticle(content) {
@@ -518,15 +529,24 @@ class FAQApp {
 
         // 保存阅读进度
         articleContent.addEventListener('scroll', () => {
+            if (!this.currentArticle) return;
+            
             const scrollPercent = articleContent.scrollTop / 
                 (articleContent.scrollHeight - articleContent.clientHeight);
-            localStorage.setItem(`progress:${window.location.hash}`, scrollPercent);
+            const progressKey = `progress:#${this.currentArticle.category}/${this.currentArticle.slug}`;
+            localStorage.setItem(progressKey, scrollPercent);
         });
     }
 
     checkInitialHash() {
         if (window.location.hash) {
             const [category, slug] = window.location.hash.substring(1).split('/');
+            
+            // 避免重复加载当前文章
+            if (this.currentArticle && this.currentArticle.slug === slug && this.currentArticle.category === category) {
+                return;
+            }
+            
             this.loadArticle(slug, category);
         } else {
             this.showHome();
