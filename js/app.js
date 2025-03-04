@@ -689,13 +689,22 @@ class FAQApp {
 
         // 点击搜索结果外部时关闭搜索结果
         document.addEventListener('click', (e) => {
-            if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
-                searchResults.innerHTML = '';
-                searchResults.style.display = 'none';
-            }
-            if (headerSearchResults && !headerSearchResults.contains(e.target) && !headerSearchInput.contains(e.target)) {
-                headerSearchResults.innerHTML = '';
-                headerSearchResults.style.display = 'none';
+            // 检查是否点击了搜索框或搜索结果区域
+            const isSearchInputClick = searchInput && (searchInput.contains(e.target) || e.target === searchInput);
+            const isHeaderSearchInputClick = headerSearchInput && (headerSearchInput.contains(e.target) || e.target === headerSearchInput);
+            const isSearchResultsClick = searchResults && searchResults.contains(e.target);
+            const isHeaderSearchResultsClick = headerSearchResults && headerSearchResults.contains(e.target);
+            
+            // 如果点击了搜索框或搜索结果区域以外的地方，关闭搜索结果
+            if (!isSearchInputClick && !isHeaderSearchInputClick && !isSearchResultsClick && !isHeaderSearchResultsClick) {
+                if (searchResults) {
+                    searchResults.innerHTML = '';
+                    searchResults.style.display = 'none';
+                }
+                if (headerSearchResults) {
+                    headerSearchResults.innerHTML = '';
+                    headerSearchResults.style.display = 'none';
+                }
             }
         });
 
@@ -729,7 +738,7 @@ class FAQApp {
         if (!container) container = document.getElementById('search-results');
         
         if (results.length === 0) {
-            container.innerHTML = `<div class="no-results">${this.t('search.noResults')}</div>`;
+            container.innerHTML = `<div class="search-results-inner"><div class="no-results">${this.t('search.noResults')}</div></div>`;
             container.style.display = 'block'; // 显示"无结果"提示
             return;
         }
@@ -752,7 +761,8 @@ class FAQApp {
         container.style.display = 'block'; // 确保搜索结果可见
 
         // 添加搜索结果点击事件
-        container.querySelectorAll('.search-result-item').forEach(item => {
+        const searchResultItems = container.querySelectorAll('.search-result-item');
+        searchResultItems.forEach(item => {
             item.addEventListener('click', () => {
                 const slug = item.dataset.slug;
                 const category = item.dataset.category;
@@ -765,6 +775,7 @@ class FAQApp {
                 
                 this.loadArticle(slug, category);
                 container.innerHTML = '';
+                container.style.display = 'none';
                 
                 // 清空搜索框
                 const searchInput = document.getElementById('search-input');
