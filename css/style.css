@@ -140,6 +140,7 @@ body {
     overflow-y: auto;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    display: none;
 }
 
 .search-result-item {
@@ -1257,81 +1258,163 @@ body {
 
 /* 主页头部搜索框样式 */
 .header-search {
-    max-width: 600px;
+    max-width: 500px;
     margin: 1.5rem auto;
     position: relative;
+    z-index: 9000;
 }
 
 .header-search .search-box {
     position: relative;
     display: flex;
     align-items: center;
+    background: rgba(255,255,255,0.15);
+    border-radius: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.header-search .search-box:hover {
+    background: rgba(255,255,255,0.2);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
 .header-search .search-icon {
     position: absolute;
-    left: 1rem;
+    left: 1.2rem;
     color: white;
-    opacity: 0.8;
+    opacity: 0.9;
+    font-size: 1.1rem;
 }
 
 #header-search-input {
     width: 100%;
-    padding: 0.8rem 1rem 0.8rem 2.5rem;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 0.75rem;
+    padding: 0.9rem 1.2rem 0.9rem 3rem;
+    border: none;
+    border-radius: 1.5rem;
     font-size: 1rem;
-    background: rgba(255,255,255,0.2);
+    background: transparent;
     color: white;
     transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
 }
 
 #header-search-input::placeholder {
     color: rgba(255,255,255,0.8);
+    font-weight: 500;
 }
 
 #header-search-input:focus {
     outline: none;
+    background: rgba(255,255,255,0.1);
+}
+
+.header-search .search-box:focus-within {
     background: rgba(255,255,255,0.25);
-    border-color: rgba(255,255,255,0.5);
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.4);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
 }
 
 .header-search .search-results {
     position: absolute;
-    top: calc(100% + 0.5rem);
+    top: calc(100% + 0.8rem);
     left: 0;
     right: 0;
     background: var(--surface-color);
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 0.75rem;
+    border-radius: 1rem;
     max-height: 400px;
     overflow-y: auto;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 9999;
+    border: none;
+    padding: 0.5rem;
+    display: none;
+    overflow: visible;
+    max-height: none;
+}
+
+.header-search .search-results-inner {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 0.8rem;
+}
+
+.header-search .search-result-item {
+    border-radius: 0.8rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+    padding: 1rem;
+    background: var(--surface-color);
+}
+
+.header-search .search-result-item:hover {
+    background: rgba(99, 102, 241, 0.1);
 }
 
 /* 暗黑模式适配 */
-[data-theme="dark"] #header-search-input {
+[data-theme="dark"] .header-search .search-box {
     background: rgba(0,0,0,0.3);
-    border-color: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.1);
 }
 
-[data-theme="dark"] #header-search-input:focus {
+[data-theme="dark"] .header-search .search-box:hover {
     background: rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .header-search .search-box:focus-within {
+    background: rgba(0,0,0,0.5);
     border-color: var(--dark-primary);
 }
 
+[data-theme="dark"] #header-search-input {
+    color: rgba(255,255,255,0.9);
+}
+
 [data-theme="dark"] .header-search .search-results {
+    background: transparent;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .header-search .search-results-inner {
     background: var(--dark-surface);
-    border-color: rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] .header-search .search-result-item {
+    background: var(--dark-surface);
+}
+
+[data-theme="dark"] .header-search .search-result-item:hover {
+    background: rgba(255,255,255,0.1);
 }
 
 /* 移动端适配 */
 @media (max-width: 768px) {
     .header-search {
-        max-width: 100%;
-        padding: 0 1rem;
+        max-width: 90%;
+        margin: 1.2rem auto;
+    }
+    
+    #header-search-input {
+        padding: 0.8rem 1rem 0.8rem 2.8rem;
+        font-size: 0.95rem;
+    }
+    
+    .header-search .search-icon {
+        left: 1rem;
+    }
+    
+    .header-search .search-results {
+        position: fixed;
+        top: auto;
+        left: 5%;
+        right: 5%;
+        width: 90%;
+        margin-top: 0.5rem;
+    }
+    
+    .header-search .search-results-inner {
+        max-height: 300px;
     }
 } 

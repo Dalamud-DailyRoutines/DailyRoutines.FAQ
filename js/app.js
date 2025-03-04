@@ -613,6 +613,14 @@ class FAQApp {
         const headerSearchResults = document.getElementById('header-search-results');
         let debounceTimer;
 
+        // 确保初始状态下搜索结果区域是隐藏的
+        if (searchResults) searchResults.innerHTML = '';
+        if (headerSearchResults) headerSearchResults.innerHTML = '';
+        
+        // 添加样式确保搜索结果区域默认隐藏
+        if (headerSearchResults) headerSearchResults.style.display = 'none';
+        if (searchResults) searchResults.style.display = 'none';
+
         // 通用搜索处理函数
         const handleSearch = (input, resultsContainer) => {
             clearTimeout(debounceTimer);
@@ -621,6 +629,7 @@ class FAQApp {
             // 清空搜索结果
             if (!query) {
                 resultsContainer.innerHTML = '';
+                resultsContainer.style.display = 'none';
                 return;
             }
 
@@ -630,6 +639,8 @@ class FAQApp {
                 const results = this.searchEngine.search(query);
                 console.log('搜索结果:', results); // 添加调试日志
                 this.renderSearchResults(results, resultsContainer);
+                // 确保搜索结果区域可见
+                resultsContainer.style.display = 'block';
             }, 200);
         };
 
@@ -639,6 +650,7 @@ class FAQApp {
                 e.preventDefault();
                 input.value = '';
                 resultsContainer.innerHTML = '';
+                resultsContainer.style.display = 'none';
                 input.blur();
             } else if (e.key === 'Enter') {
                 e.preventDefault();
@@ -649,6 +661,7 @@ class FAQApp {
                         firstResult.dataset.category
                     );
                     resultsContainer.innerHTML = '';
+                    resultsContainer.style.display = 'none';
                     input.value = '';
                 }
             } else if (e.key === 'ArrowDown') {
@@ -678,9 +691,11 @@ class FAQApp {
         document.addEventListener('click', (e) => {
             if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
                 searchResults.innerHTML = '';
+                searchResults.style.display = 'none';
             }
             if (headerSearchResults && !headerSearchResults.contains(e.target) && !headerSearchInput.contains(e.target)) {
                 headerSearchResults.innerHTML = '';
+                headerSearchResults.style.display = 'none';
             }
         });
 
@@ -704,6 +719,7 @@ class FAQApp {
                     searchInput.value = `#${tag}`;
                     searchInput.focus();
                     this.renderSearchResults(results, searchResults);
+                    searchResults.style.display = 'block';
                 }
             }
         });
@@ -714,12 +730,14 @@ class FAQApp {
         
         if (results.length === 0) {
             container.innerHTML = `<div class="no-results">${this.t('search.noResults')}</div>`;
+            container.style.display = 'block'; // 显示"无结果"提示
             return;
         }
 
         console.log('渲染搜索结果:', results); // 添加调试日志
 
-        const html = results.map(result => `
+        // 创建内部容器用于滚动
+        const innerHtml = results.map(result => `
             <div class="search-result-item" data-slug="${result.slug}" data-category="${result.category}" tabindex="0">
                 <div class="search-result-title">${result.title}</div>
                 <div class="search-result-meta">
@@ -729,7 +747,9 @@ class FAQApp {
             </div>
         `).join('');
 
-        container.innerHTML = html;
+        // 使用内部容器包装搜索结果
+        container.innerHTML = `<div class="search-results-inner">${innerHtml}</div>`;
+        container.style.display = 'block'; // 确保搜索结果可见
 
         // 添加搜索结果点击事件
         container.querySelectorAll('.search-result-item').forEach(item => {
