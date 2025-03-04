@@ -609,16 +609,18 @@ class FAQApp {
     setupSearch() {
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
+        const headerSearchInput = document.getElementById('header-search-input');
+        const headerSearchResults = document.getElementById('header-search-results');
         let debounceTimer;
 
-        // 搜索输入处理
-        searchInput.addEventListener('input', (e) => {
+        // 通用搜索处理函数
+        const handleSearch = (input, resultsContainer) => {
             clearTimeout(debounceTimer);
-            const query = e.target.value.trim();
+            const query = input.value.trim();
             
             // 清空搜索结果
             if (!query) {
-                searchResults.innerHTML = '';
+                resultsContainer.innerHTML = '';
                 return;
             }
 
@@ -627,41 +629,58 @@ class FAQApp {
                 console.log('执行搜索:', query); // 添加调试日志
                 const results = this.searchEngine.search(query);
                 console.log('搜索结果:', results); // 添加调试日志
-                this.renderSearchResults(results);
+                this.renderSearchResults(results, resultsContainer);
             }, 200);
-        });
+        };
 
-        // 搜索框快捷键
-        searchInput.addEventListener('keydown', (e) => {
+        // 通用键盘事件处理函数
+        const handleKeydown = (e, input, resultsContainer) => {
             if (e.key === 'Escape') {
                 e.preventDefault();
-                searchInput.value = '';
-                searchResults.innerHTML = '';
-                searchInput.blur();
+                input.value = '';
+                resultsContainer.innerHTML = '';
+                input.blur();
             } else if (e.key === 'Enter') {
                 e.preventDefault();
-                const firstResult = searchResults.querySelector('.search-result-item');
+                const firstResult = resultsContainer.querySelector('.search-result-item');
                 if (firstResult) {
                     this.loadArticle(
                         firstResult.dataset.slug,
                         firstResult.dataset.category
                     );
-                    searchResults.innerHTML = '';
-                    searchInput.value = '';
+                    resultsContainer.innerHTML = '';
+                    input.value = '';
                 }
             } else if (e.key === 'ArrowDown') {
                 e.preventDefault();
-                const firstResult = searchResults.querySelector('.search-result-item');
+                const firstResult = resultsContainer.querySelector('.search-result-item');
                 if (firstResult) {
                     firstResult.focus();
                 }
             }
-        });
+        };
+
+        // 侧边栏搜索框
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => handleSearch(searchInput, searchResults));
+            searchInput.addEventListener('keydown', (e) => handleKeydown(e, searchInput, searchResults));
+            searchInput.placeholder = this.t('search.placeholder');
+        }
+
+        // 主页搜索框
+        if (headerSearchInput) {
+            headerSearchInput.addEventListener('input', (e) => handleSearch(headerSearchInput, headerSearchResults));
+            headerSearchInput.addEventListener('keydown', (e) => handleKeydown(e, headerSearchInput, headerSearchResults));
+            headerSearchInput.placeholder = this.t('search.placeholder');
+        }
 
         // 点击搜索结果外部时关闭搜索结果
         document.addEventListener('click', (e) => {
-            if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+            if (searchResults && !searchResults.contains(e.target) && !searchInput.contains(e.target)) {
                 searchResults.innerHTML = '';
+            }
+            if (headerSearchResults && !headerSearchResults.contains(e.target) && !headerSearchInput.contains(e.target)) {
+                headerSearchResults.innerHTML = '';
             }
         });
 
@@ -674,17 +693,25 @@ class FAQApp {
                 console.log('点击标签:', tag); // 添加调试日志
                 const results = this.searchEngine.searchByTag(tag);
                 console.log('标签搜索结果:', results); // 添加调试日志
-                searchInput.value = `#${tag}`;
-                searchInput.focus();
-                this.renderSearchResults(results);
+                
+                // 如果在主页，切换到文章页面并显示搜索结果
+                if (document.querySelector('.home-container').classList.contains('hidden') === false) {
+                    document.querySelector('.home-container').classList.add('hidden');
+                    document.querySelector('.container').classList.remove('hidden');
+                }
+                
+                if (searchInput) {
+                    searchInput.value = `#${tag}`;
+                    searchInput.focus();
+                    this.renderSearchResults(results, searchResults);
+                }
             }
         });
-
-        searchInput.placeholder = this.t('search.placeholder');
     }
 
-    renderSearchResults(results) {
-        const container = document.getElementById('search-results');
+    renderSearchResults(results, container) {
+        if (!container) container = document.getElementById('search-results');
+        
         if (results.length === 0) {
             container.innerHTML = `<div class="no-results">${this.t('search.noResults')}</div>`;
             return;
@@ -699,45 +726,55 @@ class FAQApp {
                     <span class="search-result-category">${result.category}</span>
                     ${result.date ? `<span class="search-result-date">${result.date}</span>` : ''}
                 </div>
-                ${result.tags && result.tags.length > 0 ? `
-                    <div class="search-result-tags">
-                        ${result.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                ` : ''}
             </div>
         `).join('');
 
         container.innerHTML = html;
 
-        // 为搜索结果添加点击事件
+        // 添加搜索结果点击事件
         container.querySelectorAll('.search-result-item').forEach(item => {
             item.addEventListener('click', () => {
-                this.loadArticle(
-                    item.dataset.slug, 
-                    item.dataset.category // 修正参数顺序
-                );
+                const slug = item.dataset.slug;
+                const category = item.dataset.category;
+                
+                // 如果在主页，切换到文章页面
+                if (document.querySelector('.home-container').classList.contains('hidden') === false) {
+                    document.querySelector('.home-container').classList.add('hidden');
+                    document.querySelector('.container').classList.remove('hidden');
+                }
+                
+                this.loadArticle(slug, category);
                 container.innerHTML = '';
-                document.getElementById('search-input').value = '';
+                
+                // 清空搜索框
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) searchInput.value = '';
+                
+                const headerSearchInput = document.getElementById('header-search-input');
+                if (headerSearchInput) headerSearchInput.value = '';
             });
 
-            // 添加键盘导航
+            // 键盘导航
             item.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
-                    this.loadArticle(item.dataset.slug, item.dataset.category);
-                    container.innerHTML = '';
-                    document.getElementById('search-input').value = '';
+                    item.click();
                 } else if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    const next = item.nextElementSibling;
-                    if (next) next.focus();
+                    const nextItem = item.nextElementSibling;
+                    if (nextItem) nextItem.focus();
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
-                    const prev = item.previousElementSibling;
-                    if (prev) {
-                        prev.focus();
+                    const prevItem = item.previousElementSibling;
+                    if (prevItem) {
+                        prevItem.focus();
                     } else {
-                        document.getElementById('search-input').focus();
+                        // 返回到搜索框
+                        if (container.id === 'search-results') {
+                            document.getElementById('search-input').focus();
+                        } else if (container.id === 'header-search-results') {
+                            document.getElementById('header-search-input').focus();
+                        }
                     }
                 }
             });
