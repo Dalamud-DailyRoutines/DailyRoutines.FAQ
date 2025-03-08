@@ -540,14 +540,23 @@ class FAQApp {
 
     checkInitialHash() {
         if (window.location.hash) {
-            const [category, slug] = window.location.hash.substring(1).split('/');
+            const hashContent = decodeURIComponent(window.location.hash.substring(1));
+            const parts = hashContent.split('/');
             
-            // 避免重复加载当前文章
-            if (this.currentArticle && this.currentArticle.slug === slug && this.currentArticle.category === category) {
-                return;
+            if (parts.length === 2) {
+                // 如果hash包含category和slug，加载具体文章
+                const [category, slug] = parts;
+                
+                // 避免重复加载当前文章
+                if (this.currentArticle && this.currentArticle.slug === slug && this.currentArticle.category === category) {
+                    return;
+                }
+                
+                this.loadArticle(slug, category);
+            } else if (parts.length === 1) {
+                // 如果hash只包含category，显示分类页面
+                this.showCategoryPage(parts[0]);
             }
-            
-            this.loadArticle(slug, category);
         } else {
             this.showHome();
         }
@@ -825,48 +834,96 @@ class FAQApp {
     }
 
     async showCategoryPage(categoryName) {
-        document.querySelector('.container').classList.remove('hidden');
-        document.querySelector('.home-container').classList.add('hidden');
+        console.log('显示分类页面:', categoryName); // 添加调试日志
+        
+        // 确保容器可见性正确设置
+        const container = document.querySelector('.container');
+        const homeContainer = document.querySelector('.home-container');
         const articleContent = document.getElementById('article-content');
         const articleList = document.getElementById('article-list');
         
+        if (!container || !homeContainer || !articleContent || !articleList) {
+            console.error('找不到必要的DOM元素');
+            return;
+        }
+        
+        // 设置显示状态
+        container.classList.remove('hidden');
+        homeContainer.classList.add('hidden');
         articleContent.classList.add('hidden');
         articleList.classList.remove('hidden');
         
         // 查找对应的分类
         const category = this.categories.find(cat => cat.name === categoryName);
-        if (!category) return;
+        if (!category) {
+            console.error('找不到分类:', categoryName);
+            articleList.innerHTML = `
+                <div class="error-message">
+                    <h2>找不到分类</h2>
+                    <p>无法找到分类: ${categoryName}</p>
+                </div>
+            `;
+            return;
+        }
         
-        // 渲染分类页面
+        console.log('找到分类:', category); // 添加调试日志
+        
+        // 显示加载中状态
         articleList.innerHTML = `
-            <h1 class="category-page-title">${categoryName}</h1>
-            <div class="article-list">
-                ${await Promise.all(category.articles.map(async article => {
-                    const title = await this.getArticleTitle(article, categoryName);
-                    return `
-                        <div class="article-item" data-slug="${article.slug}" data-category="${categoryName}">
-                            <h3 class="article-title">${title}</h3>
-                            ${article.date ? `<div class="article-date">${article.date}</div>` : ''}
-                            ${article.tags && article.tags.length ? `
-                                <div class="article-tags">
-                                    ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                                </div>
-                            ` : ''}
-                        </div>
-                    `;
-                })).then(articles => articles.join(''))}
+            <div class="loading">
+                <div class="loader"></div>
+                <p>${this.t('loading.category')}</p>
             </div>
         `;
         
-        // 添加文章点击事件
-        articleList.querySelectorAll('.article-item').forEach(item => {
-            item.addEventListener('click', () => {
-                this.loadArticle(item.dataset.slug, item.dataset.category);
+        try {
+            // 渲染分类页面
+            const articlesHTML = await Promise.all(category.articles.map(async article => {
+                const title = await this.getArticleTitle(article, categoryName);
+                return `
+                    <div class="article-item" data-slug="${article.slug}" data-category="${categoryName}">
+                        <h3 class="article-title">${title}</h3>
+                        ${article.date ? `<div class="article-date">${article.date}</div>` : ''}
+                        ${article.tags && article.tags.length ? `
+                            <div class="article-tags">
+                                ${article.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }));
+            
+            // 更新页面内容
+            articleList.innerHTML = `
+                <h1 class="category-page-title">${categoryName}</h1>
+                <div class="article-list">
+                    ${articlesHTML.join('')}
+                </div>
+            `;
+            
+            // 添加文章点击事件
+            articleList.querySelectorAll('.article-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    this.loadArticle(item.dataset.slug, item.dataset.category);
+                });
             });
-        });
-        
-        // 更新URL
-        window.location.hash = `#${categoryName}`;
+            
+            // 更新URL（使用replaceState避免触发新的hashchange事件）
+            const newHash = `#${categoryName}`;
+            if (window.location.hash !== newHash) {
+                history.replaceState(null, null, newHash);
+            }
+            
+        } catch (error) {
+            console.error('渲染分类页面失败:', error);
+            articleList.innerHTML = `
+                <div class="error-message">
+                    <h2>加载失败</h2>
+                    <p>无法加载分类内容</p>
+                    <p>错误信息: ${error.message}</p>
+                </div>
+            `;
+        }
     }
 }
 
