@@ -1,5 +1,5 @@
 ---
-title: 可外部调用的 IPC 一览
+title: 本体 IPC 一览
 tags: [开发, IPC]
 ---
 
