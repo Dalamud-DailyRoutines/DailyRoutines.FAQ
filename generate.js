@@ -7,6 +7,33 @@ const { LANGUAGE_CONFIG, CATEGORY_WEIGHTS } = require('./js/config.js');
 const articlesDir = path.join(__dirname, 'articles');
 const outputFile = path.join(__dirname, 'articles.json');
 
+// 存储现有文章的日期和最后修改时间
+let existingArticlesData = {};
+try {
+    if (fs.existsSync(outputFile)) {
+        const existingData = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+        existingData.categories.forEach(category => {
+            category.articles.forEach(article => {
+                existingArticlesData[`${category.name}/${article.slug}`] = {
+                    date: article.date,
+                    lastModified: article.lastModified
+                };
+                
+                // 处理翻译
+                Object.keys(article.translations).forEach(lang => {
+                    const translation = article.translations[lang];
+                    existingArticlesData[`${category.name}/${translation.slug}/${lang}`] = {
+                        date: translation.date,
+                        lastModified: translation.lastModified
+                    };
+                });
+            });
+        });
+    }
+} catch (error) {
+    console.warn('无法读取现有文章数据，将为所有文章生成新的日期:', error);
+}
+
 function getArticleLanguage(filename) {
     const match = filename.match(/\.([a-z]{2})\.md$/);
     return match ? match[1] : LANGUAGE_CONFIG.default;
@@ -17,6 +44,11 @@ function getBaseSlug(filename) {
 }
 
 function generateIndex() {
+    console.log('===== 开始生成索引 =====');
+    
+    // 输出现有文章数据的数量
+    console.log(`已加载 ${Object.keys(existingArticlesData).length} 篇现有文章的数据`);
+    
     // 确保文章目录存在
     if (!fs.existsSync(articlesDir)) {
         fs.mkdirSync(articlesDir, { recursive: true });
@@ -46,13 +78,38 @@ function generateIndex() {
                     return;
                 }
 
-                // 获取文件的最后修改时间
-                const stats = fs.statSync(file);
-                const lastModified = stats.mtime;
-                const date = lastModified.toISOString().split('T')[0];
-
                 const language = getArticleLanguage(path.basename(file));
                 const baseSlug = getBaseSlug(path.basename(file));
+                
+                // 获取文件的当前最后修改时间
+                const stats = fs.statSync(file);
+                const currentLastModified = stats.mtime.toISOString();
+                
+                // 尝试从现有数据中获取日期和最后修改时间
+                const articleKey = `${categoryName}/${baseSlug}${language !== LANGUAGE_CONFIG.default ? `/${language}` : ''}`;
+                const existingData = existingArticlesData[articleKey];
+                
+                let date, lastModified;
+                
+                if (existingData) {
+                    // 检查文件是否已被修改
+                    if (new Date(existingData.lastModified).getTime() !== new Date(currentLastModified).getTime()) {
+                        // 文件已修改，更新日期和最后修改时间
+                        date = currentLastModified.split('T')[0];
+                        lastModified = currentLastModified;
+                        console.log(`文件已修改: ${file}, 新日期: ${date}`);
+                    } else {
+                        // 文件未修改，保留原有日期和最后修改时间
+                        date = existingData.date;
+                        lastModified = existingData.lastModified;
+                        console.log(`文件未修改: ${file}, 保留日期: ${date}`);
+                    }
+                } else {
+                    // 新文件，使用当前日期和最后修改时间
+                    date = currentLastModified.split('T')[0];
+                    lastModified = currentLastModified;
+                    console.log(`新文件: ${file}, 日期: ${date}`);
+                }
 
                 const article = {
                     title: attributes.title,
@@ -60,7 +117,7 @@ function generateIndex() {
                     slug: baseSlug,
                     description: attributes.description || '',
                     tags: attributes.tags || [],
-                    lastModified: lastModified.toISOString(),
+                    lastModified: lastModified,
                     language: language,
                     translations: {}
                 };
@@ -123,6 +180,7 @@ function generateIndex() {
         }, null, 2));
         console.log('✅ 索引生成成功！');
         console.log(`📚 共处理 ${categories.length} 个分类，${categories.reduce((sum, cat) => sum + cat.articles.length, 0)} 篇文章`);
+        console.log('===== 索引生成完成 =====');
     } catch (error) {
         console.error('❌ 写入索引文件失败:', error);
         process.exit(1);
