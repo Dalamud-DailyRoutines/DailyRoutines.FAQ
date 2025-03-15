@@ -23,19 +23,19 @@
       "articles": [
         {
           "title": "Example-在我使用卫月下载 DR 时提示失败怎么回事",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "Example",
           "description": "",
           "tags": [
             "下载",
             "失败"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "Example-A failure when downloading DR through Dalamud",
-              "date": "2025-03-13",
+              "date": "2025-03-15",
               "slug": "Example",
               "description": "",
               "tags": [
@@ -43,7 +43,7 @@
                 "failure",
                 "fail"
               ],
-              "lastModified": "2025-03-13T04:14:56.703Z",
+              "lastModified": "2025-03-15T07:10:00.570Z",
               "language": "en",
               "translations": {}
             }
@@ -51,7 +51,7 @@
         },
         {
           "title": "机器人提示凭证上限怎么办",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRVerify-7",
           "description": "",
           "tags": [
@@ -60,13 +60,13 @@
             "验证",
             "凭证"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "怎么可以添加我的身份组和延长验证时间",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRVerify-6",
           "description": "",
           "tags": [
@@ -75,13 +75,13 @@
             "验证",
             "赞助"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "是否可以通过氪金的方式去避免每隔一段时间的验证",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRVerify-5",
           "description": "",
           "tags": [
@@ -90,13 +90,13 @@
             "验证",
             "赞助"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "机器人不回复我是为什么",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRVerify-4",
           "description": "",
           "tags": [
@@ -105,13 +105,13 @@
             "验证",
             "机器人"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "识别凭证有了以后要去哪儿填/验证是什么东西",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRVerify-3",
           "description": "",
           "tags": [
@@ -120,13 +120,13 @@
             "验证",
             "凭证"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "验证界面里面没有口令/口令是什么/口令错误怎么办",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRVerify-2",
           "description": "",
           "tags": [
@@ -135,13 +135,13 @@
             "验证",
             "口令"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "用户协议/验证界面是灰色被禁用状态/认证服务状态未连接/请先连接至认证服务器",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRVerify-1",
           "description": "",
           "tags": [
@@ -149,13 +149,13 @@
             "Daily Routines",
             "验证"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "存储物品到部队存储柜中有概率提示处理失败",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRTempQA-3",
           "description": "",
           "tags": [
@@ -164,26 +164,26 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "每次注入完都要手动开启DR",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRTempQA-2",
           "description": "",
           "tags": [
             "临时问题",
             "验证，注入"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "7.1版本更新后为什么我认证掉了（模块数量不对）",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRTempQA-1",
           "description": "",
           "tags": [
@@ -191,13 +191,13 @@
             "验证，版本更新",
             "验证"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "使用`后台禁止游戏画面渲染`模块后，切回游戏时发现铭牌渲染异常怎么办",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRModule-3",
           "description": "",
           "tags": [
@@ -206,13 +206,13 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "无人岛自动导入生产计划总是显示物品数据解析失败",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRModule-2",
           "description": "",
           "tags": [
@@ -221,13 +221,13 @@
             "Daily Routines",
             "解析失败"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "我看到别人有/国际服有XXX模块，但是我找不到/不能用",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRModule-1",
           "description": "",
           "tags": [
@@ -235,13 +235,13 @@
             "Daily Routines",
             "模块"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "发现模块为0怎么解决",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-9",
           "description": "",
           "tags": [
@@ -249,13 +249,13 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "如何查看模块的内部名称",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-7",
           "description": "",
           "tags": [
@@ -264,13 +264,13 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "如何更改打断热键",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-6",
           "description": "",
           "tags": [
@@ -278,13 +278,13 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "如何使用DR的测试版本",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-5",
           "description": "",
           "tags": [
@@ -293,13 +293,13 @@
             "Daily Routines",
             "卫月"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "如何重置模块",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-4",
           "description": "",
           "tags": [
@@ -307,13 +307,13 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "我的DR版本号怎么看",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-3",
           "description": "",
           "tags": [
@@ -321,13 +321,13 @@
             "Daily Routines",
             "版本号"
           ],
-          "lastModified": "2025-03-13T04:14:56.702Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "插件安装器内没有显示主界面或配置界面的打开按钮 / 打不开界面并提示该命令不存在",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-2",
           "description": "",
           "tags": [
@@ -336,13 +336,13 @@
             "该命令不存在",
             "打开按钮"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "我该如何关闭DR悬浮窗",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-10",
           "description": "",
           "tags": [
@@ -350,13 +350,13 @@
             "DR",
             "Daily Routines"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "使用卫月下载DR时提示失败",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRMain-1",
           "description": "",
           "tags": [
@@ -365,13 +365,13 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "运行DR时游戏有闪退,卡死,报错等问题",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRError-6",
           "description": "",
           "tags": [
@@ -380,13 +380,13 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "运行DR时游戏有闪退,卡死,报错等问题",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRError-5",
           "description": "",
           "tags": [
@@ -395,13 +395,13 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "我的 TTS (文本转语音) 启用之后仍然没有声音怎么办?",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRError-4",
           "description": "",
           "tags": [
@@ -411,13 +411,13 @@
             "DR",
             "TTS"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "我的游戏为什么突然闪退/卡死了（无报错）",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRError-3",
           "description": "",
           "tags": [
@@ -426,13 +426,13 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.569Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "打开我的DR (设置我的字体后)，变成乱码了怎么办",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRError-2",
           "description": "",
           "tags": [
@@ -441,46 +441,46 @@
             "Daily Routines",
             "DR"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.568Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "每次重新注入卫月之后，之前调整的窗口位置都还原了 或 验证界面出现无限失败",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRError-1",
           "description": "",
           "tags": [
             "常见故障/报错",
             "卫月"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.568Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "如何安全的屏蔽 麻痹、精神失常 和 强制移动",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRClass-2",
           "description": "",
           "tags": [
             "Class",
             "课堂小知识"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.568Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "你想知道的关于长臂猿(更远的技能施法距离)的一切，特别是近战",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DRClass-1",
           "description": "",
           "tags": [
             "Class",
             "课堂小知识"
           ],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.568Z",
           "language": "zh",
           "translations": {}
         }
@@ -490,27 +490,40 @@
       "name": "更新日志-UpdateNote",
       "articles": [
         {
-          "title": "1.4.4.1 版本更新",
-          "date": "2025-03-13",
+          "title": "v1.4.5.0 版本更新",
+          "date": "2025-03-15",
+          "slug": "v1.4.5.0",
+          "description": "",
+          "tags": [
+            "更新笔记",
+            "1.4.5.0"
+          ],
+          "lastModified": "2025-03-15T07:10:00.571Z",
+          "language": "zh",
+          "translations": {}
+        },
+        {
+          "title": "v1.4.4.1 版本更新",
+          "date": "2025-03-15",
           "slug": "v1.4.4.1",
           "description": "",
           "tags": [
             "更新笔记",
             "1.4.4.0"
           ],
-          "lastModified": "2025-03-13T04:14:56.704Z",
+          "lastModified": "2025-03-15T07:10:00.571Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "1.4.4.1 Update Notes",
-              "date": "2025-03-13",
+              "date": "2025-03-15",
               "slug": "v1.4.4.1",
               "description": "",
               "tags": [
                 "Update Notes",
                 "1.4.4.0"
               ],
-              "lastModified": "2025-03-13T04:14:56.704Z",
+              "lastModified": "2025-03-15T07:10:00.571Z",
               "language": "en",
               "translations": {}
             }
@@ -518,26 +531,26 @@
         },
         {
           "title": "1.4.4.0 版本更新",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "v1.4.4.0",
           "description": "",
           "tags": [
             "更新笔记",
             "1.4.4.0"
           ],
-          "lastModified": "2025-03-13T04:14:56.704Z",
+          "lastModified": "2025-03-15T07:10:00.571Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "v1.4.4.0 Update Notes",
-              "date": "2025-03-13",
+              "date": "2025-03-15",
               "slug": "v1.4.4.0",
               "description": "",
               "tags": [
                 "Update Notes",
                 "1.4.4.0"
               ],
-              "lastModified": "2025-03-13T04:14:56.704Z",
+              "lastModified": "2025-03-15T07:10:00.571Z",
               "language": "en",
               "translations": {}
             }
@@ -545,26 +558,26 @@
         },
         {
           "title": "1.4.3.0 版本更新",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "v1.4.3.0",
           "description": "",
           "tags": [
             "更新笔记",
             "1.4.3.0"
           ],
-          "lastModified": "2025-03-13T04:14:56.704Z",
+          "lastModified": "2025-03-15T07:10:00.571Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "v1.4.3.0 Update Notes",
-              "date": "2025-03-13",
+              "date": "2025-03-15",
               "slug": "v1.4.3.0",
               "description": "",
               "tags": [
                 "Update Notes",
                 "1.4.3.0"
               ],
-              "lastModified": "2025-03-13T04:14:56.703Z",
+              "lastModified": "2025-03-15T07:10:00.571Z",
               "language": "en",
               "translations": {}
             }
@@ -572,26 +585,26 @@
         },
         {
           "title": "1.4.2.1 版本更新",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "v1.4.2.1",
           "description": "",
           "tags": [
             "更新笔记",
             "1.4.2.0"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.571Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "v1.4.2.1 Update Notes",
-              "date": "2025-03-13",
+              "date": "2025-03-15",
               "slug": "v1.4.2.1",
               "description": "",
               "tags": [
                 "Update Notes",
                 "1.4.2.0"
               ],
-              "lastModified": "2025-03-13T04:14:56.703Z",
+              "lastModified": "2025-03-15T07:10:00.571Z",
               "language": "en",
               "translations": {}
             }
@@ -599,26 +612,26 @@
         },
         {
           "title": "1.4.2.0 版本更新",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "v1.4.2.0",
           "description": "",
           "tags": [
             "更新笔记",
             "1.4.2.0"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.571Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "v1.4.2.0 Update Notes",
-              "date": "2025-03-13",
+              "date": "2025-03-15",
               "slug": "v1.4.2.0",
               "description": "",
               "tags": [
                 "Update Notes",
                 "1.4.2.0"
               ],
-              "lastModified": "2025-03-13T04:14:56.703Z",
+              "lastModified": "2025-03-15T07:10:00.571Z",
               "language": "en",
               "translations": {}
             }
@@ -631,20 +644,20 @@
       "articles": [
         {
           "title": "友情插件",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "友情插件",
           "description": "",
           "tags": [],
-          "lastModified": "2025-03-13T04:14:56.701Z",
+          "lastModified": "2025-03-15T07:10:00.568Z",
           "language": "zh",
           "translations": {
             "en": {
               "title": "Recommended Plugins",
-              "date": "2025-03-13",
+              "date": "2025-03-15",
               "slug": "友情插件",
               "description": "",
               "tags": [],
-              "lastModified": "2025-03-13T04:14:56.701Z",
+              "lastModified": "2025-03-15T07:10:00.568Z",
               "language": "en",
               "translations": {}
             }
@@ -657,27 +670,27 @@
       "articles": [
         {
           "title": "模块 IPC 一览",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DailyRoutines.Modules.IPC",
           "description": "",
           "tags": [
             "开发",
             "IPC"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         },
         {
           "title": "本体 IPC 一览",
-          "date": "2025-03-13",
+          "date": "2025-03-15",
           "slug": "DailyRoutines.IPC",
           "description": "",
           "tags": [
             "开发",
             "IPC"
           ],
-          "lastModified": "2025-03-13T04:14:56.703Z",
+          "lastModified": "2025-03-15T07:10:00.570Z",
           "language": "zh",
           "translations": {}
         }
