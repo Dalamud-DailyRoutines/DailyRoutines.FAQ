@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const frontmatter = require('front-matter');
+const { execSync } = require('child_process');
 const { LANGUAGE_CONFIG, CATEGORY_WEIGHTS } = require('./js/config.js');
 
 const articlesDir = path.join(__dirname, 'articles');
@@ -32,6 +33,38 @@ try {
     }
 } catch (error) {
     console.warn('无法读取现有文章数据，将为所有文章生成新的日期:', error);
+}
+
+// 获取文件的 Git 最后修改时间
+function getGitLastModifiedDate(filePath) {
+    try {
+        // 获取文件最后修改的 Git 提交日期
+        const relativePath = path.relative(process.cwd(), filePath).replace(/\\/g, '/');
+        const lastModified = execSync(`git log -1 --format="%aI" -- "${relativePath}"`, { encoding: 'utf8' }).trim();
+        
+        if (lastModified) {
+            return lastModified;
+        }
+    } catch (error) {
+        console.warn(`获取文件 ${filePath} 的 Git 修改时间失败:`, error.message);
+    }
+    
+    // 如果 Git 命令失败或文件没有 Git 历史，返回文件系统的修改时间
+    const stats = fs.statSync(filePath);
+    return stats.mtime.toISOString();
+}
+
+// 检查文件是否在 Git 中是新文件
+function isNewGitFile(filePath) {
+    try {
+        const relativePath = path.relative(process.cwd(), filePath).replace(/\\/g, '/');
+        // 检查文件是否有 Git 提交历史
+        const gitHistory = execSync(`git log --format="%H" -- "${relativePath}"`, { encoding: 'utf8' }).trim();
+        return !gitHistory;
+    } catch (error) {
+        // 如果出错，假设文件是新的
+        return true;
+    }
 }
 
 function getArticleLanguage(filename) {
@@ -81,9 +114,9 @@ function generateIndex() {
                 const language = getArticleLanguage(path.basename(file));
                 const baseSlug = getBaseSlug(path.basename(file));
                 
-                // 获取文件的当前最后修改时间
-                const stats = fs.statSync(file);
-                const currentLastModified = stats.mtime.toISOString();
+                // 使用 Git 获取文件的最后修改时间
+                const currentLastModified = getGitLastModifiedDate(file);
+                const isNewFile = isNewGitFile(file);
                 
                 // 尝试从现有数据中获取日期和最后修改时间
                 const articleKey = `${categoryName}/${baseSlug}${language !== LANGUAGE_CONFIG.default ? `/${language}` : ''}`;
@@ -91,13 +124,14 @@ function generateIndex() {
                 
                 let date, lastModified;
                 
-                if (existingData) {
-                    // 检查文件是否已被修改
+                if (existingData && !isNewFile) {
+                    // 比较 Git 最后修改时间与现有记录的最后修改时间
                     if (new Date(existingData.lastModified).getTime() !== new Date(currentLastModified).getTime()) {
                         // 文件已修改，更新日期和最后修改时间
-                        date = currentLastModified.split('T')[0];
+                        // 保留原始创建日期，仅更新最后修改时间
+                        date = existingData.date;
                         lastModified = currentLastModified;
-                        console.log(`文件已修改: ${file}, 新日期: ${date}`);
+                        console.log(`文件已修改: ${file}, 保留创建日期: ${date}, 更新修改时间: ${lastModified}`);
                     } else {
                         // 文件未修改，保留原有日期和最后修改时间
                         date = existingData.date;
@@ -106,6 +140,7 @@ function generateIndex() {
                     }
                 } else {
                     // 新文件，使用当前日期和最后修改时间
+                    // 对于新文件，创建日期和修改日期相同
                     date = currentLastModified.split('T')[0];
                     lastModified = currentLastModified;
                     console.log(`新文件: ${file}, 日期: ${date}`);
